@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>Frieren and Rotating Calipers</title>
+      <link href="/2023/12/01/Frieren%20and%20Rotating%20Calipers/"/>
+      <url>/2023/12/01/Frieren%20and%20Rotating%20Calipers/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Frieren-and-Rotating-Calipers"><a href="#Frieren-and-Rotating-Calipers" class="headerlink" title="Frieren and Rotating Calipers"></a><a href="https://www.luogu.com.cn/problem/U382825">Frieren and Rotating Calipers</a></h1><p><strong>时间限制：1s</strong><br><strong>空间限制：256MB</strong></p><h3 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h3><p>​芙莉莲正在学习旋转卡壳，但是字不会念，你能告诉她正确的读音吗？</p><p>学习过程中看到最小矩形覆盖问题，即给你<strong>n</strong>个点，求最小的矩形使得覆盖所有点。她发现最小的矩形的长和宽不一定与$x$轴，$y$轴平行，她认为这些矩形非常无聊，你能找到面积最小的<strong>有趣矩形</strong>使得覆盖所有点吗？</p><p><strong>有趣矩形</strong>：长和宽与$x$轴或$y$轴平行的矩形</p><h3 id="Input-Description"><a href="#Input-Description" class="headerlink" title="Input Description"></a>Input Description</h3><p>第一行一个正整数<strong>T</strong>表示测试数 $1 \le T \le 10^2$</p><p>每个测试的第一行有一个正整数<strong>n</strong>表示点的数量 $1 \le n \le 10^4$</p><p>每个测试接下来有n行，每行两个整数 $(x, y) $   $0 \le x \le 10^4 $，$0 \le y \le 10^4 $</p><h3 id="Output-Description"><a href="#Output-Description" class="headerlink" title="Output Description"></a>Output Description</h3><p>每行输出符合条件的<strong>有趣矩形</strong>的面积</p><h3 id="Input-Sample"><a href="#Input-Sample" class="headerlink" title="Input Sample"></a>Input Sample</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">2</span><br><span class="line">3</span><br><span class="line">0 0</span><br><span class="line">1 0</span><br><span class="line">0 1</span><br><span class="line">4</span><br><span class="line">0 0</span><br><span class="line">1 0</span><br><span class="line">0 1</span><br><span class="line">1 1</span><br></pre></td></tr></table></figure><h3 id="Output-Sample"><a href="#Output-Sample" class="headerlink" title="Output Sample"></a>Output Sample</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">1</span><br></pre></td></tr></table></figure><p><img src="/images/FrierenandRotatingCalipers/Frieren.png" alt="Frieren"></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Frieren Beyond Journey&#39;s End</title>
+      <link href="/2023/12/01/Frieren%20Beyond%20Journey&#39;s%20End/"/>
+      <url>/2023/12/01/Frieren%20Beyond%20Journey&#39;s%20End/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Frieren-Beyond-Journey’s-End"><a href="#Frieren-Beyond-Journey’s-End" class="headerlink" title="Frieren Beyond Journey’s End"></a><a href="https://www.luogu.com.cn/problem/U367574">Frieren Beyond Journey’s End</a></h1><p><strong>时间限制：1s</strong><br><strong>空间限制：256MB</strong></p><h3 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h3><p>&emsp;&emsp;芙莉莲热衷周游各方搜集奇怪的魔法，某一天她得到一个有趣的魔法公式,  </p><p>$$<br> \sum_{i&#x3D;1}^n\sum_{l&#x3D;1}^i\sum_{r&#x3D;i}^n\sum_{k&#x3D;l}^r a_k<br>$$</p><p>同时为此搜集了<strong>n</strong>个魔法单元。由于种族的长寿天性导致她对时间的感觉不同于一般人，所以她请求你来帮忙。她估算结果可能很大，请你告诉她结果对<strong>1000000007</strong>取余后的数</p><h3 id="Input-Description"><a href="#Input-Description" class="headerlink" title="Input Description"></a>Input Description</h3><p>第一行一个正整数<strong>T</strong>表示测试数 $ 1 \le T \le 10^5 $</p><p>每个测试的第一行有一个正整数<strong>n</strong>表示魔法单元的数量 $ 1 \le n \le 10^5 $</p><p>每个测试的第二行有<strong>n</strong>个整数 $ a_1, a_2, … , a_n  \quad 0 \le a_i \le 10^9 $</p><p>题目保证总的所有n的和不会超过 $ 2 \times 10^5 $</p><h3 id="Output-Description"><a href="#Output-Description" class="headerlink" title="Output Description"></a>Output Description</h3><p>对于每个测试输出一个整数 即结果对  $ 1000000007 $ 取余后的数</p><h3 id="Input-Sample"><a href="#Input-Sample" class="headerlink" title="Input Sample"></a>Input Sample</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">2</span><br><span class="line">4</span><br><span class="line">2 0 2 3</span><br><span class="line">4</span><br><span class="line">1 0 2 5</span><br></pre></td></tr></table></figure><h3 id="Output-Sample"><a href="#Output-Sample" class="headerlink" title="Output Sample"></a>Output Sample</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">80</span><br><span class="line">90</span><br></pre></td></tr></table></figure><p><img src="/images/FrierenBeyondJourney'sEnd/FrierenBeyondJourney'sEnd.png" alt="FrierenBeyondJourney&#39;sEnd"></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>usage</title>
+      <link href="/2023/12/01/usage/"/>
+      <url>/2023/12/01/usage/</url>
+      
+        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p><h3 id="Load-images"><a href="#Load-images" class="headerlink" title="Load images"></a>Load images</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hexo clean</span><br><span class="line">$ hexo g</span><br><span class="line">$ hexo d</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+  
+  
+    
+    
+    <entry>
+      <title>About</title>
+      <link href="/about/index.html"/>
+      <url>/about/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Music</title>
+      <link href="/music/index.html"/>
+      <url>/music/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Link</title>
+      <link href="/link/index.html"/>
+      <url>/link/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Movies</title>
+      <link href="/movies/index.html"/>
+      <url>/movies/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+  
+</search>
