@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>在blog写作</title>
+      <link href="/2023/12/02/Write%20On%20Hexo/"/>
+      <url>/2023/12/02/Write%20On%20Hexo/</url>
+      
+        <content type="html"><![CDATA[<h1 id="在blog写作"><a href="#在blog写作" class="headerlink" title="在blog写作"></a>在blog写作</h1><h2 id="常规操作"><a href="#常规操作" class="headerlink" title="常规操作"></a>常规操作</h2><p>正常写完md后 放到post下</p><p><strong>注意md Front-matter</strong></p><p><a href="https://hexo.io/zh-cn/docs/front-matter">Front-matter | Hexo</a></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo clean </span><br><span class="line">hexo g </span><br></pre></td></tr></table></figure><p>然后本地启动就可以看到文章</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s </span><br></pre></td></tr></table></figure><p>上传到自己的网站要部署</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d </span><br></pre></td></tr></table></figure><table><thead><tr><th align="left">常用命令</th><th align="left">简写</th><th align="left">中文含义</th></tr></thead><tbody><tr><td align="left">hexo server</td><td align="left">hexo s</td><td align="left">本地启动</td></tr><tr><td align="left">hexo generate</td><td align="left">hexo g</td><td align="left">生成静态文件</td></tr><tr><td align="left">hexo deploy</td><td align="left">hexo d</td><td align="left">部署网站</td></tr><tr><td align="left">hexo clean</td><td align="left">hexo cl</td><td align="left">清除缓存和已经生成的静态文件</td></tr></tbody></table><p>一般情况，我们先依次输入<code>hexo clean</code>、 <code>hexo g</code> 、 <code>hexo s</code> ，没问题再 <code>hexo d</code>就行。</p><h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="图片未显示"><a href="#图片未显示" class="headerlink" title="图片未显示"></a>图片未显示</h3><ol><li><strong>图片名</strong>和<strong>路径</strong>不能有空格</li><li>本地图片要<strong>相对路径</strong> 以blog为根目录</li></ol><p>typora + hexo</p><p>在Front-matter加上</p><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">typora-root-url: ..</span><br></pre></td></tr></table></figure><p><img src="/images/WriteOnHexo/root.png" alt="root"></p><p>写作时把图片拖入即可</p><p><img src="/images/WriteOnHexo/write.png" alt="write"></p><p>解释：在source下创建images放所有文章图片 WriteOnHexo是本文的图片文件夹， 拖入即可显示，并且网站上也可正常显示</p><p>markdown具体如下</p><p><img src="/images/WriteOnHexo/concrete.png" alt="concrete"></p><h3 id="数学表达式乱码"><a href="#数学表达式乱码" class="headerlink" title="数学表达式乱码"></a>数学表达式乱码</h3><p>需要安装和配置 hexo-math 具体可看他人教程</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Build blog </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> hexo blog </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>本地hexo部署</title>
       <link href="/2023/12/02/Local%20Hexo/"/>
       <url>/2023/12/02/Local%20Hexo/</url>
@@ -99,9 +124,9 @@
     
     
     <entry>
-      <title>Movies</title>
-      <link href="/movies/index.html"/>
-      <url>/movies/index.html</url>
+      <title>categories</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -121,17 +146,6 @@
     
     
     <entry>
-      <title>categories</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Link</title>
       <link href="/link/index.html"/>
       <url>/link/index.html</url>
@@ -143,9 +157,9 @@
     
     
     <entry>
-      <title>tags</title>
-      <link href="/tags/index.html"/>
-      <url>/tags/index.html</url>
+      <title>Movies</title>
+      <link href="/movies/index.html"/>
+      <url>/movies/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -157,6 +171,17 @@
       <title>Music</title>
       <link href="/music/index.html"/>
       <url>/music/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>tags</title>
+      <link href="/tags/index.html"/>
+      <url>/tags/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
