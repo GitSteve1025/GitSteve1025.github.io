@@ -8,7 +8,7 @@
       <link href="/2023/12/02/Local%20Hexo/"/>
       <url>/2023/12/02/Local%20Hexo/</url>
       
-        <content type="html"><![CDATA[<h1 id="本地hexo部署"><a href="#本地hexo部署" class="headerlink" title="本地hexo部署"></a>本地hexo部署</h1><h2 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h2><p>Git下载地址：<a href="https://git-scm.com/download/">https://git-scm.com/download/</a></p><p><img src="/images/Howtobuildmyownblog/gitdownload.png" alt="gitdownload"></p><p>直接安装即可，网站会自动匹配合适版本（一直点next， 安装位置可自定义）</p><h2 id="安装Node-js"><a href="#安装Node-js" class="headerlink" title="安装Node.js"></a>安装Node.js</h2><p>Node.js下载地址： <a href="https://nodejs.org/en/download/">https://nodejs.org/en/download/</a></p><p><img src="/images/Howtobuildmyownblog/nodejsdownload.png" alt="nodejsdownload"></p><p>选择合适的installer直接安装即可</p><h2 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h2><p>新建文件夹blog</p><p>该<strong>blog文件夹作为blog根目录</strong>， 此后所有git bash 都在这操作</p><p><strong>blog内</strong>右键可以看到 git bash here</p><p><img src="/images/Howtobuildmyownblog/gitbash.png" alt="gitbash"></p><p>安装hexo</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure><p><img src="/images/Howtobuildmyownblog/hexodownload.png" alt="hexodownload"></p><p>初始化hexo</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure><p><img src="/images/Howtobuildmyownblog/hexoinit.png" alt="hexoinit"></p><p>安装相关依赖</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure><p><img src="/images/Howtobuildmyownblog/hexoinstall.png" alt="hexoinstall"></p><p>测试</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure><p><img src="/images/Howtobuildmyownblog/hexostart.png" alt="hexostart"></p><p>输入后可以看到这个本地静态网站open即可</p><p><img src="/images/Howtobuildmyownblog/hexolocal.png" alt="hexolocal"></p><p>网站界面可以用butterfly 和 Next 美化</p><p><img src="/images/Howtobuildmyownblog/webpage.png" alt="webpage"></p><p>利用butterfly美化后，具体可参考</p><p><a href="https://butterfly.js.org/">https://butterfly.js.org/</a></p>]]></content>
+        <content type="html"><![CDATA[<h1 id="本地hexo部署"><a href="#本地hexo部署" class="headerlink" title="本地hexo部署"></a>本地hexo部署</h1><h2 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h2><p>Git下载地址：<a href="https://git-scm.com/download/">https://git-scm.com/download/</a></p><p><img src="/images/LocalHexo/gitdownload.png" alt="gitdownload"></p><p>直接安装即可，网站会自动匹配合适版本（一直点next， 安装位置可自定义）</p><h2 id="安装Node-js"><a href="#安装Node-js" class="headerlink" title="安装Node.js"></a>安装Node.js</h2><p>Node.js下载地址： <a href="https://nodejs.org/en/download/">https://nodejs.org/en/download/</a></p><p><img src="/images/LocalHexo/nodejsdownload.png" alt="nodejsdownload"></p><p>选择合适的installer直接安装即可</p><h2 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h2><p>新建文件夹blog</p><p>该<strong>blog文件夹作为blog根目录</strong>， 此后所有git bash 都在这操作</p><p><strong>blog内</strong>右键可以看到 git bash here</p><p><img src="/images/LocalHexo/gitbash.png" alt="gitbash"></p><p>安装hexo</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure><p><img src="/images/LocalHexo/hexodownload.png" alt="hexodownload"></p><p>初始化hexo</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure><p><img src="/images/LocalHexo/hexoinit.png" alt="hexoinit"></p><p>安装相关依赖</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure><p><img src="/images/LocalHexo/hexoinstall.png" alt="hexoinstall"></p><p>测试</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure><p><img src="/images/LocalHexo/hexostart.png" alt="hexostart"></p><p>输入后可以看到这个本地静态网站open即可</p><p><img src="/images/LocalHexo/hexolocal.png" alt="hexolocal"></p><p>网站界面可以用butterfly 和 Next 美化</p><p><img src="/images/LocalHexo/webpage.png" alt="webpage"></p><p>利用butterfly美化后，具体可参考</p><p><a href="https://butterfly.js.org/">https://butterfly.js.org/</a></p>]]></content>
       
       
       <categories>
@@ -99,28 +99,6 @@
     
     
     <entry>
-      <title>Music</title>
-      <link href="/music/index.html"/>
-      <url>/music/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Link</title>
-      <link href="/link/index.html"/>
-      <url>/link/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Movies</title>
       <link href="/movies/index.html"/>
       <url>/movies/index.html</url>
@@ -143,6 +121,28 @@
     
     
     <entry>
+      <title>categories</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Link</title>
+      <link href="/link/index.html"/>
+      <url>/link/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>tags</title>
       <link href="/tags/index.html"/>
       <url>/tags/index.html</url>
@@ -154,9 +154,9 @@
     
     
     <entry>
-      <title>categories</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
+      <title>Music</title>
+      <link href="/music/index.html"/>
+      <url>/music/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
