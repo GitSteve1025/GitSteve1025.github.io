@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>Splay</title>
+      <link href="/2023/12/08/Splay/"/>
+      <url>/2023/12/08/Splay/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Splay"><a href="#Splay" class="headerlink" title="Splay"></a>Splay</h1><p>Splay 操作规定：每访问一个节点$x$后都要强制将其旋转到根节点。</p><p>每次对$x$做一次 splay 步骤，$x$到根节点的距离都会更近。</p><p>Splay 步骤有三种，具体分为六种情况：</p><h2 id="rotate"><a href="#rotate" class="headerlink" title="rotate"></a>rotate</h2><h3 id="zig"><a href="#zig" class="headerlink" title="zig"></a>zig</h3><p>当$p$是根节点，$x$是$p$的左子节点时操作。</p><p><img src="/images/DataStructure/Splay/zig.png" alt="zig"></p><h4 id="zig-code"><a href="#zig-code" class="headerlink" title="zig code"></a>zig code</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//to do</span></span><br></pre></td></tr></table></figure><h3 id="zag"><a href="#zag" class="headerlink" title="zag"></a>zag</h3><p>当$p$是根节点，$x$是$p$的右子节点时操作。</p><p><img src="/images/DataStructure/Splay/zag.png" alt="zag"></p><h4 id="zag-code"><a href="#zag-code" class="headerlink" title="zag code"></a>zag code</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//to do</span></span><br></pre></td></tr></table></figure><h3 id="zig-zig"><a href="#zig-zig" class="headerlink" title="zig-zig"></a>zig-zig</h3><p>当$p$不是根节点，$p$和$x$都是左子节点时操作。</p><p><img src="/images/DataStructure/Splay/zig-zig.png" alt="zig-zig"></p><h4 id="zig-zig-code"><a href="#zig-zig-code" class="headerlink" title="zig-zig code"></a>zig-zig code</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//to do</span></span><br></pre></td></tr></table></figure><h3 id="zag-zag"><a href="#zag-zag" class="headerlink" title="zag-zag"></a>zag-zag</h3><p>当$p$不是根节点，$p$和$x$都是右子节点时操作。</p><p><img src="/images/DataStructure/Splay/zag-zag.png" alt="zag-zag"></p><h4 id="zag-zag-code"><a href="#zag-zag-code" class="headerlink" title="zag-zag code"></a>zag-zag code</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//to do</span></span><br></pre></td></tr></table></figure><h3 id="zig-zag"><a href="#zig-zag" class="headerlink" title="zig-zag"></a>zig-zag</h3><p>当$p$不是根节点，$p$是左子节点，$x$是右子节点时操作。</p><p><img src="/images/DataStructure/Splay/zig-zag.png" alt="zig-zag"></p><h4 id="zig-zag-code"><a href="#zig-zag-code" class="headerlink" title="zig-zag code"></a>zig-zag code</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//to do</span></span><br></pre></td></tr></table></figure><h3 id="zag-zig"><a href="#zag-zig" class="headerlink" title="zag-zig"></a>zag-zig</h3><p>当$p$不是根节点，$p$是右子节点，$x$是左子节点时操作。</p><p><img src="/images/DataStructure/Splay/zag-zig.png" alt="zag-zig"></p><h4 id="zag-zig-code"><a href="#zag-zig-code" class="headerlink" title="zag-zig code"></a>zag-zig code</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//to do</span></span><br></pre></td></tr></table></figure><p>可以看出 zig 和 zag 互为<strong>镜像</strong>操作</p><h2 id="insert"><a href="#insert" class="headerlink" title="insert"></a>insert</h2><h3 id="insert-code"><a href="#insert-code" class="headerlink" title="insert code"></a>insert code</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//to do</span></span><br></pre></td></tr></table></figure><h2 id="remove"><a href="#remove" class="headerlink" title="remove"></a>remove</h2><h3 id="remove-code"><a href="#remove-code" class="headerlink" title="remove code"></a>remove code</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//to do</span></span><br></pre></td></tr></table></figure><h2 id="kth"><a href="#kth" class="headerlink" title="kth"></a>kth</h2><h3 id="kth-code"><a href="#kth-code" class="headerlink" title="kth code"></a>kth code</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//to do</span></span><br></pre></td></tr></table></figure><h2 id="precursor"><a href="#precursor" class="headerlink" title="precursor"></a>precursor</h2><h3 id="precursor-code"><a href="#precursor-code" class="headerlink" title="precursor code"></a>precursor code</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//to do</span></span><br></pre></td></tr></table></figure><h2 id="successor"><a href="#successor" class="headerlink" title="successor"></a>successor</h2><h3 id="successor-code"><a href="#successor-code" class="headerlink" title="successor code"></a>successor code</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//to do</span></span><br></pre></td></tr></table></figure><h2 id="other"><a href="#other" class="headerlink" title="other"></a>other</h2><h3 id="Literary-Splay"><a href="#Literary-Splay" class="headerlink" title="Literary Splay"></a>Literary Splay</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//to do</span></span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Learn Data Structure </category>
+          
+          <category> Splay </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Learn Data Structure </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Template</title>
       <link href="/2023/12/03/Template/"/>
       <url>/2023/12/03/Template/</url>
@@ -205,9 +232,9 @@
     
     
     <entry>
-      <title>Music</title>
-      <link href="/music/index.html"/>
-      <url>/music/index.html</url>
+      <title>categories</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -238,20 +265,9 @@
     
     
     <entry>
-      <title>Link</title>
-      <link href="/link/index.html"/>
-      <url>/link/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>categories</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
+      <title>Music</title>
+      <link href="/music/index.html"/>
+      <url>/music/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -263,6 +279,17 @@
       <title>About</title>
       <link href="/about/index.html"/>
       <url>/about/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Link</title>
+      <link href="/link/index.html"/>
+      <url>/link/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
