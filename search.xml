@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>2023 CCPC Guilin C.Master of Both IV</title>
+      <link href="/2023/12/11/2023%20CCPC%20Guilin%20C/"/>
+      <url>/2023/12/11/2023%20CCPC%20Guilin%20C/</url>
+      
+        <content type="html"><![CDATA[<h1 id="C-Master-of-Both-IV"><a href="#C-Master-of-Both-IV" class="headerlink" title="C. Master of Both IV"></a><a href="https://codeforces.com/gym/104768/problem/C">C. Master of Both IV</a></h1><h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><p>前置知识：线性基</p><p>线性基内的基元异或不会为 0 ，线性基<strong>插入失败</strong>等价于<strong>当前数与线性基的某些基元异或为 0</strong></p><p>由此我们可以记录 插入失败的个数，记为$c$，则任选数异或为 0 的种类为 $2^c - 1$（排除空集)</p><p>题目要求：$\forall x\in[1,m],a_{i_x}|\bigoplus\limits_{j&#x3D;1}^m a_{i_j}$</p><p>我们将<strong>异或结果</strong>分为两种：等于 0， 不等于 0</p><p>一、等于 0</p><p>0 是任何数的倍数， 把所有数插入线性基求插入失败次数 $c$ 贡献 $2^c - 1$</p><p>二、不等于 0</p><p>假设结果为 $f$，因为要整除，选的数必须为它的因子，</p><p>设因子为$f_1, f_2, f_3,…,f_n$ （不包括自己）</p><p>个数记为$c_1, c_2, c_3,…,c_n$ （不包括自己）</p><p>让因子的异或结果为 0， 再异或自己， 结果就是 $f$， 满足题目要求</p><p>把所有因子插入进线性基，同种数必定插入失败，直接加 </p><p>插入失败的次数等于：$\sum\limits_{i &#x3D; 1}^{n}(c_i - 1) + k$  (k为因子插入失败次数)</p><p>假设自己有 $c$ 个 要让结果不为 0 ，我们必须选<strong>奇数</strong>个， 有 $2^{c - 1}$ 种选法</p><p>贡献：$2^{c - 1} * 2^{(\sum\limits_{i &#x3D; 1}^{n}(c_i - 1) + k)} &#x3D; 2^{(\sum\limits_{i &#x3D; 1}^{n}(c_i - 1) + k + c - 1)}$</p><p>二者相加即为结果</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="type">int</span> N&gt;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">linear_basis</span> &#123;</span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> siz;</span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> basis[N];</span><br><span class="line">    <span class="built_in">linear_basis</span>()&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i &lt; N;i++)&#123;</span><br><span class="line">            basis[i] = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        siz = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">insert</span><span class="params">(<span class="type">long</span> <span class="type">long</span> x)</span></span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = N - <span class="number">1</span>;~i;i--)&#123;</span><br><span class="line">            <span class="keyword">if</span>((x &gt;&gt; i) &amp; <span class="number">1</span>)&#123;</span><br><span class="line">                <span class="keyword">if</span>(basis[i] == <span class="number">0</span>)&#123;</span><br><span class="line">                    siz += <span class="number">1</span>;</span><br><span class="line">                    basis[i] = x;</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    x ^= basis[i];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">20</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> M = <span class="number">2e5</span> + <span class="number">10</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> P = <span class="number">998244353</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">long</span> <span class="type">long</span> P2[M];</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">prepare</span><span class="params">()</span></span>&#123;</span><br><span class="line">    P2[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i &lt; M;i++)&#123;</span><br><span class="line">        P2[i] = P2[i - <span class="number">1</span>] * <span class="number">2</span> % P;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">power</span><span class="params">(<span class="type">long</span> <span class="type">long</span> a, <span class="type">long</span> <span class="type">long</span> b, <span class="type">long</span> <span class="type">long</span> p)</span></span>&#123;</span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> ans = <span class="number">1</span>;</span><br><span class="line">    a %= p;</span><br><span class="line">    <span class="keyword">while</span>(b)&#123;</span><br><span class="line">        <span class="keyword">if</span>(b &amp; <span class="number">1</span>)&#123;</span><br><span class="line">            ans = ans * a % p;</span><br><span class="line">        &#125;</span><br><span class="line">        a = a * a % p;</span><br><span class="line">        b &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> n;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">a</span><span class="params">(n + <span class="number">1</span>)</span></span>;</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">cnt</span><span class="params">(n + <span class="number">1</span>)</span></span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i &lt;= n;i++)&#123;</span><br><span class="line">        cin &gt;&gt; a[i];</span><br><span class="line">        cnt[a[i]] += <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    vector&lt;vector&lt;pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt;&gt;&gt; <span class="built_in">val</span>(n + <span class="number">1</span>); </span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i &lt;= n;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(cnt[i])&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j = i * <span class="number">2</span>;j &lt;= n;j += i)&#123;</span><br><span class="line">                val[j].<span class="built_in">push_back</span>(&#123;i, cnt[i]&#125;);</span><br><span class="line">            &#125;            </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i &lt;= n;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(cnt[i])&#123;</span><br><span class="line">            <span class="type">long</span> <span class="type">long</span> c = <span class="number">0</span>;</span><br><span class="line">            linear_basis&lt;N&gt; line;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">auto</span>&amp; [x, y] : val[i])&#123;</span><br><span class="line">                c += y - <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">if</span>(!line.<span class="built_in">insert</span>(x))&#123;</span><br><span class="line">                    c += <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="type">long</span> <span class="type">long</span> tep = P2[cnt[i] - <span class="number">1</span>];</span><br><span class="line">            <span class="type">long</span> <span class="type">long</span> tmp = P2[c] * tep % P;</span><br><span class="line">            ans = (ans + tmp) % P;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> c = <span class="number">0</span>;</span><br><span class="line">    linear_basis&lt;N&gt; line;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i &lt;= n;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(!line.<span class="built_in">insert</span>(a[i]))&#123;</span><br><span class="line">            c += <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ans = (ans + P2[c] - <span class="number">1</span>) % P;</span><br><span class="line">    </span><br><span class="line">    cout &lt;&lt; ans &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    ios::<span class="built_in">sync_with_stdio</span>(<span class="literal">false</span>);</span><br><span class="line">    cout.<span class="built_in">tie</span>(<span class="number">0</span>);</span><br><span class="line">    cin.<span class="built_in">tie</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="built_in">prepare</span>();</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> t;</span><br><span class="line">    cin &gt;&gt; t;</span><br><span class="line">    <span class="keyword">while</span>(t--)&#123;</span><br><span class="line">        <span class="built_in">solve</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> ACM </category>
+          
+          <category> CCPC </category>
+          
+          <category> Guilin </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 线性基 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Splay</title>
       <link href="/2023/12/08/Splay/"/>
       <url>/2023/12/08/Splay/</url>
@@ -232,17 +261,6 @@
     
     
     <entry>
-      <title>categories</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Movies</title>
       <link href="/movies/index.html"/>
       <url>/movies/index.html</url>
@@ -254,20 +272,9 @@
     
     
     <entry>
-      <title>tags</title>
-      <link href="/tags/index.html"/>
-      <url>/tags/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Music</title>
-      <link href="/music/index.html"/>
-      <url>/music/index.html</url>
+      <title>Link</title>
+      <link href="/link/index.html"/>
+      <url>/link/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -287,9 +294,31 @@
     
     
     <entry>
-      <title>Link</title>
-      <link href="/link/index.html"/>
-      <url>/link/index.html</url>
+      <title>Tags</title>
+      <link href="/tags/index.html"/>
+      <url>/tags/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Categories</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Music</title>
+      <link href="/music/index.html"/>
+      <url>/music/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
