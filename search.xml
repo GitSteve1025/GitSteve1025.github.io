@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>Data Structure</title>
+      <link href="/2023/12/27/Learning/Course/Data%20Structure/"/>
+      <url>/2023/12/27/Learning/Course/Data%20Structure/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Splay"><a href="#Splay" class="headerlink" title="Splay"></a>Splay</h1><p>Splay 操作规定：每访问一个节点 $x$ 后都要强制将其旋转到根节点。</p><p>每次对 $x$ 做一次 splay 步骤， $x$ 到根节点的距离都会更近。</p><p>Splay 步骤有三种，具体分为六种情况：</p><h2 id="rotate"><a href="#rotate" class="headerlink" title="rotate"></a>rotate</h2><h3 id="zig"><a href="#zig" class="headerlink" title="zig"></a>zig</h3><p>当 $p$ 是根节点，$x$ 是 $p$ 的左子节点时操作。</p><p><img src="/images/DataStructure/Splay/zig.png" alt="zig"></p><h3 id="zag"><a href="#zag" class="headerlink" title="zag"></a>zag</h3><p>当$p$是根节点，$x$是$p$的右子节点时操作。</p><p><img src="/images/DataStructure/Splay/zag.png" alt="zag"></p><h3 id="zig-zig"><a href="#zig-zig" class="headerlink" title="zig-zig"></a>zig-zig</h3><p>当 $p$ 不是根节点，$p$ 和 $x$ 都是左子节点时操作。</p><p><img src="/images/DataStructure/Splay/zig-zig.png" alt="zig-zig"></p><h3 id="zag-zag"><a href="#zag-zag" class="headerlink" title="zag-zag"></a>zag-zag</h3><p>当$p$不是根节点， $p$ 和 $x$ 都是右子节点时操作。</p><p><img src="/images/DataStructure/Splay/zag-zag.png" alt="zag-zag"></p><h3 id="zig-zag"><a href="#zig-zag" class="headerlink" title="zig-zag"></a>zig-zag</h3><p>当 $p$ 不是根节点，$p$ 是左子节点， $x$ 是右子节点时操作。</p><p><img src="/images/DataStructure/Splay/zig-zag.png" alt="zig-zag"></p><h3 id="zag-zig"><a href="#zag-zig" class="headerlink" title="zag-zig"></a>zag-zig</h3><p>当 $p$ 不是根节点，$p$ 是右子节点， $x$ 是左子节点时操作。</p><p><img src="/images/DataStructure/Splay/zag-zig.png" alt="zag-zig"></p><p>可以看出 zig 和 zag 互为<strong>镜像</strong>操作</p><p>更详细的教程 <a href="https://oi-wiki.org/ds/splay/">Splay</a></p><h1 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h1><h2 id="Hash-function"><a href="#Hash-function" class="headerlink" title="Hash function"></a>Hash function</h2><p>得到 $key$ ，一般是 $X \ mod \ TableSize$ 。</p><h2 id="Solve-collision"><a href="#Solve-collision" class="headerlink" title="Solve collision"></a>Solve collision</h2><h3 id="分离链接法-separate-chaining"><a href="#分离链接法-separate-chaining" class="headerlink" title="分离链接法 (separate chaining)"></a>分离链接法 (separate chaining)</h3><p>将散列到同一个值的所有元素保留的一个链表。</p><p> <img src="/images/DataStructure/Hash/%E5%88%86%E7%A6%BB%E9%93%BE%E6%8E%A5%E6%B3%95.png" alt="分离链接法"></p><h3 id="探测法-probing"><a href="#探测法-probing" class="headerlink" title="探测法 (probing)"></a>探测法 (probing)</h3><h4 id="线性探测法"><a href="#线性探测法" class="headerlink" title="线性探测法"></a>线性探测法</h4><p>碰撞就往下找（每次走一格），直到找到空位填。 $f(i) &#x3D; i$</p><p>例：将 $(89, 18, 49, 58, 69)$ 放入大小为 $10$ 的表。</p><p><img src="/images/DataStructure/Hash/%E7%BA%BF%E6%80%A7%E6%8E%A2%E6%B5%8B%E6%B3%95.png" alt="线性探测法"></p><h4 id="平方探测法"><a href="#平方探测法" class="headerlink" title="平方探测法"></a>平方探测法</h4><p>碰撞就往下找（每次走平方数格，即 $1, 4, 9, …$ ）。 直到找到空位填。 $f(i) &#x3D; i^{2}$ </p><p>例：将 $(89, 18, 49, 58, 69)$ 放入大小为 $10$ 的表。</p><p><img src="/images/DataStructure/Hash/%E5%B9%B3%E6%96%B9%E6%8E%A2%E6%B5%8B%E6%B3%95.png" alt="平方探测法"></p><h4 id="双散列-double-hashing"><a href="#双散列-double-hashing" class="headerlink" title="双散列 (double hashing)"></a>双散列 (double hashing)</h4><p>碰撞就往下找（每次走 $hash_2(x)$ 格，即 $hash_{2}(x), 2hash_{2}(x), 3hash_{2}(x), …$ ）。 直到找到空位填。 $f(i) &#x3D; i \times hash_{2}(x)$</p><p> 例：将 $(89, 18, 49, 58, 69)$ 放入大小为 $10$ 的表。 $hash_{2}(x) &#x3D; R - (x \ mod \ R)$ ， $R &#x3D; 7$   </p><p><img src="/images/DataStructure/Hash/%E5%8F%8C%E6%95%A3%E5%88%97.png" alt="双散列"></p><h3 id="再散列-rehashing"><a href="#再散列-rehashing" class="headerlink" title="再散列 (rehashing)"></a>再散列 (rehashing)</h3><p>将原来的表散列到新表， 新表一般为旧表两倍大。</p><h1 id="Sort"><a href="#Sort" class="headerlink" title="Sort"></a>Sort</h1><h2 id="QuickSort"><a href="#QuickSort" class="headerlink" title="QuickSort"></a>QuickSort</h2><p>平均 $O(N \ log \ N)$ ，最坏 $O(N^{2})$ </p><p><strong>算法步骤</strong>：</p><ol><li>如果 $|S| \le 1 \quad return$</li><li>取 $S$ 中某一元素 $v$ 当作<strong>枢纽元</strong> $(pivot)$</li><li>将 $S$ 划分为两个不相交的集合， $S_{1} &#x3D; \lbrace x \in S \wedge x &lt; v \rbrace$ ，$S_{2} &#x3D; \lbrace x \in S \wedge x &gt; v \rbrace$ </li><li>$return \ quicksort(S_{1}) + \lbrace v \rbrace + quicksort(S_{2})$</li></ol><h3 id="三数中值分割法-Median-of-Three-Partitioning"><a href="#三数中值分割法-Median-of-Three-Partitioning" class="headerlink" title="三数中值分割法 (Median-of-Three Partitioning)"></a>三数中值分割法 (Median-of-Three Partitioning)</h3><p>左端点 $left$ ，右端点 $right$ ，选择的<strong>枢纽元</strong> $\lfloor (left + right) &#x2F; 2 \rfloor$</p><h3 id="Cpp-Code"><a href="#Cpp-Code" class="headerlink" title="Cpp Code"></a>Cpp Code</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">quicksort</span><span class="params">(vector&lt;T&gt;&amp; items)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> n = items.<span class="built_in">size</span>();</span><br><span class="line">    <span class="keyword">if</span> (n &lt;= <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    vector&lt;T&gt; smaller, same, larger;</span><br><span class="line">    <span class="type">int</span> pivot = items[n / <span class="number">2</span>];</span><br><span class="line">    <span class="comment">//int pivot = items[rand() % n]; // 更快</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> x : items) &#123;</span><br><span class="line">        <span class="keyword">if</span> (x &lt; pivot) &#123;</span><br><span class="line">            smaller.<span class="built_in">push_back</span>(x);</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> (x &gt; pivot) &#123;</span><br><span class="line">            larger.<span class="built_in">push_back</span>(x);</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            same.<span class="built_in">push_back</span>(x);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">quicksort</span>(smaller);</span><br><span class="line">    <span class="built_in">quicksort</span>(larger);</span><br><span class="line">    <span class="built_in">move</span>(smaller.<span class="built_in">begin</span>(), smaller.<span class="built_in">end</span>(), items.<span class="built_in">begin</span>());</span><br><span class="line">    <span class="built_in">move</span>(same.<span class="built_in">begin</span>(), same.<span class="built_in">end</span>(), items.<span class="built_in">begin</span>() + smaller.<span class="built_in">size</span>());</span><br><span class="line">    <span class="built_in">move</span>(larger.<span class="built_in">begin</span>(), larger.<span class="built_in">end</span>(), items.<span class="built_in">end</span>() - larger.<span class="built_in">size</span>());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="Python-Code"><a href="#Python-Code" class="headerlink" title="Python Code"></a>Python Code</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">quicksort</span>(<span class="params">items</span>) :</span><br><span class="line">    n = <span class="built_in">len</span>(items)</span><br><span class="line">    <span class="keyword">if</span> n &lt;= <span class="number">1</span> :</span><br><span class="line">    <span class="keyword">return</span> items</span><br><span class="line">    pivot = items[n // <span class="number">2</span>]</span><br><span class="line">    <span class="comment"># pivot = items[random.randint(0, n - 1)] # 更快</span></span><br><span class="line">    smaller = <span class="built_in">list</span>()</span><br><span class="line">    larger = <span class="built_in">list</span>()</span><br><span class="line">    same = <span class="built_in">list</span>()</span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> items :</span><br><span class="line">    <span class="keyword">if</span> x &lt; pivot :</span><br><span class="line">    smaller.append(x)</span><br><span class="line">    <span class="keyword">elif</span> x &gt; pivot :</span><br><span class="line">    larger.append(x)</span><br><span class="line">    <span class="keyword">else</span> :</span><br><span class="line">    same.append(x)</span><br><span class="line">    <span class="keyword">return</span> quicksort(smaller) + same + quicksort(larger)</span><br></pre></td></tr></table></figure><h2 id="MergeSort"><a href="#MergeSort" class="headerlink" title="MergeSort"></a>MergeSort</h2><h2 id="HeapSort"><a href="#HeapSort" class="headerlink" title="HeapSort"></a>HeapSort</h2>]]></content>
+      
+      
+      <categories>
+          
+          <category> Learning </category>
+          
+          <category> Course </category>
+          
+          <category> Data Structure </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Data Structure </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Python</title>
       <link href="/2023/12/19/Learning/Languages/Python/"/>
       <url>/2023/12/19/Learning/Languages/Python/</url>
@@ -139,35 +168,6 @@
         <tags>
             
             <tag> 线性基 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Splay</title>
-      <link href="/2023/12/08/Learning/Data%20Structure/Splay/"/>
-      <url>/2023/12/08/Learning/Data%20Structure/Splay/</url>
-      
-        <content type="html"><![CDATA[<h1 id="Splay"><a href="#Splay" class="headerlink" title="Splay"></a>Splay</h1><p>Splay 操作规定：每访问一个节点$x$后都要强制将其旋转到根节点。</p><p>每次对$x$做一次 splay 步骤，$x$到根节点的距离都会更近。</p><p>Splay 步骤有三种，具体分为六种情况：</p><h2 id="rotate"><a href="#rotate" class="headerlink" title="rotate"></a>rotate</h2><h3 id="zig"><a href="#zig" class="headerlink" title="zig"></a>zig</h3><p>当$p$是根节点，$x$是$p$的左子节点时操作。</p><p><img src="/images/DataStructure/Splay/zig.png" alt="zig"></p><h4 id="zig-code"><a href="#zig-code" class="headerlink" title="zig code"></a>zig code</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//to do</span></span><br></pre></td></tr></table></figure><h3 id="zag"><a href="#zag" class="headerlink" title="zag"></a>zag</h3><p>当$p$是根节点，$x$是$p$的右子节点时操作。</p><p><img src="/images/DataStructure/Splay/zag.png" alt="zag"></p><h4 id="zag-code"><a href="#zag-code" class="headerlink" title="zag code"></a>zag code</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//to do</span></span><br></pre></td></tr></table></figure><h3 id="zig-zig"><a href="#zig-zig" class="headerlink" title="zig-zig"></a>zig-zig</h3><p>当$p$不是根节点，$p$和$x$都是左子节点时操作。</p><p><img src="/images/DataStructure/Splay/zig-zig.png" alt="zig-zig"></p><h4 id="zig-zig-code"><a href="#zig-zig-code" class="headerlink" title="zig-zig code"></a>zig-zig code</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//to do</span></span><br></pre></td></tr></table></figure><h3 id="zag-zag"><a href="#zag-zag" class="headerlink" title="zag-zag"></a>zag-zag</h3><p>当$p$不是根节点，$p$和$x$都是右子节点时操作。</p><p><img src="/images/DataStructure/Splay/zag-zag.png" alt="zag-zag"></p><h4 id="zag-zag-code"><a href="#zag-zag-code" class="headerlink" title="zag-zag code"></a>zag-zag code</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//to do</span></span><br></pre></td></tr></table></figure><h3 id="zig-zag"><a href="#zig-zag" class="headerlink" title="zig-zag"></a>zig-zag</h3><p>当$p$不是根节点，$p$是左子节点，$x$是右子节点时操作。</p><p><img src="/images/DataStructure/Splay/zig-zag.png" alt="zig-zag"></p><h4 id="zig-zag-code"><a href="#zig-zag-code" class="headerlink" title="zig-zag code"></a>zig-zag code</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//to do</span></span><br></pre></td></tr></table></figure><h3 id="zag-zig"><a href="#zag-zig" class="headerlink" title="zag-zig"></a>zag-zig</h3><p>当$p$不是根节点，$p$是右子节点，$x$是左子节点时操作。</p><p><img src="/images/DataStructure/Splay/zag-zig.png" alt="zag-zig"></p><h4 id="zag-zig-code"><a href="#zag-zig-code" class="headerlink" title="zag-zig code"></a>zag-zig code</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//to do</span></span><br></pre></td></tr></table></figure><p>可以看出 zig 和 zag 互为<strong>镜像</strong>操作</p><h2 id="insert"><a href="#insert" class="headerlink" title="insert"></a>insert</h2><h3 id="insert-code"><a href="#insert-code" class="headerlink" title="insert code"></a>insert code</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//to do</span></span><br></pre></td></tr></table></figure><h2 id="remove"><a href="#remove" class="headerlink" title="remove"></a>remove</h2><h3 id="remove-code"><a href="#remove-code" class="headerlink" title="remove code"></a>remove code</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//to do</span></span><br></pre></td></tr></table></figure><h2 id="kth"><a href="#kth" class="headerlink" title="kth"></a>kth</h2><h3 id="kth-code"><a href="#kth-code" class="headerlink" title="kth code"></a>kth code</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//to do</span></span><br></pre></td></tr></table></figure><h2 id="precursor"><a href="#precursor" class="headerlink" title="precursor"></a>precursor</h2><h3 id="precursor-code"><a href="#precursor-code" class="headerlink" title="precursor code"></a>precursor code</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//to do</span></span><br></pre></td></tr></table></figure><h2 id="successor"><a href="#successor" class="headerlink" title="successor"></a>successor</h2><h3 id="successor-code"><a href="#successor-code" class="headerlink" title="successor code"></a>successor code</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//to do</span></span><br></pre></td></tr></table></figure><h2 id="other"><a href="#other" class="headerlink" title="other"></a>other</h2><h3 id="Literary-Splay"><a href="#Literary-Splay" class="headerlink" title="Literary Splay"></a>Literary Splay</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//to do</span></span><br></pre></td></tr></table></figure>]]></content>
-      
-      
-      <categories>
-          
-          <category> Learning </category>
-          
-          <category> Data Structure </category>
-          
-          <category> Splay </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> Data Structure </tag>
             
         </tags>
       
@@ -381,6 +381,39 @@
     
     
     <entry>
+      <title>Tags</title>
+      <link href="/tags/index.html"/>
+      <url>/tags/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>About</title>
+      <link href="/about/index.html"/>
+      <url>/about/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Music</title>
+      <link href="/music/index.html"/>
+      <url>/music/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Categories</title>
       <link href="/categories/index.html"/>
       <url>/categories/index.html</url>
@@ -406,39 +439,6 @@
       <title>Movies</title>
       <link href="/movies/index.html"/>
       <url>/movies/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Music</title>
-      <link href="/music/index.html"/>
-      <url>/music/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Tags</title>
-      <link href="/tags/index.html"/>
-      <url>/tags/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>About</title>
-      <link href="/about/index.html"/>
-      <url>/about/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
