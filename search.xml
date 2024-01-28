@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>Rust</title>
+      <link href="/2024/01/28/Learning/Languages/Rust/"/>
+      <url>/2024/01/28/Learning/Languages/Rust/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Rust"><a href="#Rust" class="headerlink" title="Rust"></a>Rust</h1><h1 id="Common-Programming-Concepts"><a href="#Common-Programming-Concepts" class="headerlink" title="Common Programming Concepts"></a>Common Programming Concepts</h1><h2 id="Variables-and-Mutability"><a href="#Variables-and-Mutability" class="headerlink" title="Variables and Mutability"></a>Variables and Mutability</h2><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// variables and mutability</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">x</span> = <span class="number">5</span>;</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;x = &#123;x&#125;&quot;</span>);</span><br><span class="line"><span class="comment">// x = 6; // Error! cannot assign twice to immutable variable</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// mut -&gt; mutable</span></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">y</span> = <span class="number">5</span>;</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;y = &#123;y&#125;&quot;</span>);</span><br><span class="line">y = <span class="number">6</span>;<span class="comment">// right</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;y = &#123;y&#125;&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// constants</span></span><br><span class="line"><span class="keyword">const</span> YEAR : <span class="type">i32</span> = <span class="number">2024</span>;</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;YEAR = &#123;YEAR&#125;&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// shadowing</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">s</span> = <span class="number">5</span>;</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;s = &#123;s&#125;&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">s</span> = s + <span class="number">1</span>;<span class="comment">// 覆盖前面的内容</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;s = &#123;s&#125;&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">s</span> = s * <span class="number">2</span>;</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;s = &#123;s&#125;&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">s</span> = <span class="string">&quot;    &quot;</span>;</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;s = &#123;s&#125;&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">s</span> = s.<span class="title function_ invoke__">len</span>();<span class="comment">// 类型可变</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;s = &#123;s&#125;&quot;</span>);</span><br></pre></td></tr></table></figure><h2 id="Data-Types"><a href="#Data-Types" class="headerlink" title="Data Types"></a>Data Types</h2><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// let x = &quot;2024&quot;.trim().parse().expect(&quot;worng type&quot;);//Error! consider giving `x` an explicit type</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">x</span>: <span class="type">i32</span> = <span class="string">&quot;2024&quot;</span>.<span class="title function_ invoke__">trim</span>().<span class="title function_ invoke__">parse</span>().<span class="title function_ invoke__">expect</span>(<span class="string">&quot;worng type&quot;</span>);</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;x = &#123;x&#125;&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Floating-Point Types</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">x</span> = <span class="number">2.0</span>;<span class="comment">// f64</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;x = &#123;x&#125;&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">x</span>: <span class="type">f32</span> = <span class="number">2.0</span>;<span class="comment">// f32</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;x = &#123;x&#125;&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Numeric Operations same as C++</span></span><br><span class="line"><span class="comment">// addition</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">sum</span> = <span class="number">5</span> + <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// subtraction</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">difference</span> = <span class="number">95.5</span> - <span class="number">4.3</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// multiplication</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">product</span> = <span class="number">4</span> * <span class="number">30</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// division</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">quotient</span> = <span class="number">56.7</span> / <span class="number">32.2</span>;</span><br><span class="line"><span class="keyword">let</span> <span class="variable">truncated</span> = -<span class="number">5</span> / <span class="number">3</span>; <span class="comment">// Results in -1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// remainder</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">remainder</span> = <span class="number">43</span> % <span class="number">5</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// The Boolean Type</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">t</span> = <span class="literal">true</span>;</span><br><span class="line"><span class="keyword">let</span> <span class="variable">f</span>: <span class="type">bool</span> = <span class="literal">false</span>;<span class="comment">// with explicit type annotation</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;t&#125; &#123;f&#125;&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// The Character Type</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">c</span> = <span class="string">&#x27;z&#x27;</span>;</span><br><span class="line"><span class="keyword">let</span> <span class="variable">z</span>: <span class="type">char</span> = <span class="string">&#x27;ℤ&#x27;</span>; <span class="comment">// with explicit type annotation</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">heart_eyed_cat</span> = &#x27;😻&#x27;;</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;c&#125; &#123;z&#125; &#123;heart_eyed_cat&#125;&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Compound Types</span></span><br><span class="line"><span class="comment">// tuple type can be different</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">x</span>: (<span class="type">i32</span>, <span class="type">f32</span>, <span class="type">bool</span>) = (<span class="number">1</span>, <span class="number">2.0</span>, <span class="literal">false</span>);</span><br><span class="line"><span class="comment">// println!(&quot;&#123;x&#125;&quot;);// Error</span></span><br><span class="line"><span class="keyword">let</span> (a, b, c) = x;</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;a&#125; &#123;b&#125; &#123;c&#125;&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// array</span></span><br><span class="line"><span class="comment">// type must be same</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">x</span> = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br><span class="line"><span class="comment">// [type; size]</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">x</span>: [<span class="type">i32</span>; <span class="number">5</span>] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];<span class="comment">// with explicit type annotation</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// [val; size] init with same val</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">x</span> = [<span class="number">0</span>; <span class="number">5</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// Accessing Array Elements</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, x[<span class="number">0</span>]);</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, x[<span class="number">5</span>]);<span class="comment">// this operation will panic at runtime index out of bounds: the length is 5 but the index is 5</span></span><br><span class="line"></span><br></pre></td></tr></table></figure><h2 id="Functions"><a href="#Functions" class="headerlink" title="Functions"></a>Functions</h2><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">fib</span>(n : <span class="type">i32</span>) <span class="punctuation">-&gt;</span> <span class="type">i32</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">0</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">1</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="title function_ invoke__">fib</span>(n - <span class="number">1</span>) + <span class="title function_ invoke__">fib</span>(n - <span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="comment"><a href="#comment" class="headerlink" title="comment"></a>comment</h2><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// comment</span></span><br></pre></td></tr></table></figure><h2 id="Control-Flow"><a href="#Control-Flow" class="headerlink" title="Control Flow"></a>Control Flow</h2><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// loop</span></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">x</span> = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">let</span> <span class="variable">y</span> = <span class="keyword">loop</span> &#123;</span><br><span class="line">    x += <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;x&#125;&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> x &gt; <span class="number">10</span> &#123;</span><br><span class="line">        <span class="keyword">break</span> x * <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;y&#125;&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> x &gt; <span class="number">0</span> &#123;</span><br><span class="line">    x -= <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;x&#125;&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> <span class="variable">x</span> <span class="keyword">in</span> [<span class="number">3</span>; <span class="number">5</span>] &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;x&#125;&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> <span class="variable">i</span> <span class="keyword">in</span> (<span class="number">1</span>..<span class="number">4</span>) &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;i&#125;&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Learning </category>
+          
+          <category> Languages </category>
+          
+          <category> Rust </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Rust </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Dynamic Programming</title>
       <link href="/2024/01/28/Learning/Algorithms/Dynamic%20Programming/"/>
       <url>/2024/01/28/Learning/Algorithms/Dynamic%20Programming/</url>
@@ -557,9 +586,42 @@
     
     
     <entry>
+      <title>About</title>
+      <link href="/about/index.html"/>
+      <url>/about/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Movies</title>
       <link href="/movies/index.html"/>
       <url>/movies/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Link</title>
+      <link href="/link/index.html"/>
+      <url>/link/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Categories</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -582,39 +644,6 @@
       <title>Tags</title>
       <link href="/tags/index.html"/>
       <url>/tags/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Link</title>
-      <link href="/link/index.html"/>
-      <url>/link/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>About</title>
-      <link href="/about/index.html"/>
-      <url>/about/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Categories</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
