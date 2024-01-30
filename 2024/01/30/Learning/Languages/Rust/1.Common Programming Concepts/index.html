@@ -1,0 +1,492 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Common Programming Concepts | GitSteve1025</title><meta name="author" content="GitSteve1025"><meta name="copyright" content="GitSteve1025"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Common Programming ConceptsComment12345&#x2F;&#x2F; 单行注释&#x2F;*多行注释*&#x2F;    Variables and Mutabilitylet$rust$ 基本变量默认不可变 使用 $let$ 关键字声明变量 1234let x &#x3D; 5;println!(&quot;x &#x3D; &#123;x&#125;&quot;);&#x2F;&#x2F; 输出 x &#x3D; 5&#x2F;&#x2F; x &#x3D; 6; &#x2F;&#x2F; Err">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Common Programming Concepts">
+<meta property="og:url" content="https://gitsteve1025.github.io/2024/01/30/Learning/Languages/Rust/1.Common%20Programming%20Concepts/index.html">
+<meta property="og:site_name" content="GitSteve1025">
+<meta property="og:description" content="Common Programming ConceptsComment12345&#x2F;&#x2F; 单行注释&#x2F;*多行注释*&#x2F;    Variables and Mutabilitylet$rust$ 基本变量默认不可变 使用 $let$ 关键字声明变量 1234let x &#x3D; 5;println!(&quot;x &#x3D; &#123;x&#125;&quot;);&#x2F;&#x2F; 输出 x &#x3D; 5&#x2F;&#x2F; x &#x3D; 6; &#x2F;&#x2F; Err">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitsteve1025.github.io/avatar/kano.jpg">
+<meta property="article:published_time" content="2024-01-30T07:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-30T08:17:27.800Z">
+<meta property="article:author" content="GitSteve1025">
+<meta property="article:tag" content="Rust">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitsteve1025.github.io/avatar/kano.jpg"><link rel="shortcut icon" href="/avatar/kano.jpg"><link rel="canonical" href="https://gitsteve1025.github.io/2024/01/30/Learning/Languages/Rust/1.Common%20Programming%20Concepts/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Common Programming Concepts',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-01-30 16:17:27'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/avatar/kano.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">22</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">25</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/top/default/default.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="GitSteve1025"><span class="site-name">GitSteve1025</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Common Programming Concepts</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-01-30T07:00:00.000Z" title="发表于 2024-01-30 15:00:00">2024-01-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-01-30T08:17:27.800Z" title="更新于 2024-01-30 16:17:27">2024-01-30</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Learning/">Learning</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Learning/Languages/">Languages</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Learning/Languages/Rust/">Rust</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Learning/Languages/Rust/1-Common-Programming-Concepts/">1.Common Programming Concepts</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>7分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Common Programming Concepts"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Common-Programming-Concepts"><a href="#Common-Programming-Concepts" class="headerlink" title="Common Programming Concepts"></a>Common Programming Concepts</h1><h2 id="Comment"><a href="#Comment" class="headerlink" title="Comment"></a>Comment</h2><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 单行注释</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">多行注释</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Variables-and-Mutability"><a href="#Variables-and-Mutability" class="headerlink" title="Variables and Mutability"></a>Variables and Mutability</h2><h3 id="let"><a href="#let" class="headerlink" title="let"></a>let</h3><p>$rust$ 基本变量默认不可变</p>
+<p>使用 $let$ 关键字声明变量</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">x</span> = <span class="number">5</span>;</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;x = &#123;x&#125;&quot;</span>);<span class="comment">// 输出 x = 5</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// x = 6; // Error! cannot assign twice to immutable variable</span></span><br></pre></td></tr></table></figure>
+
+<p>也可以显示声明变量类型</p>
+<p>格式 <code>data_name: type </code></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">x</span>: <span class="type">i32</span> = <span class="number">5</span>;</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;x = &#123;x&#125;&quot;</span>);<span class="comment">// 输出 x = 5</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>变量名小写</strong>，大写 $warning$ 警告！</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">X</span> = <span class="number">5</span>;</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, X);</span><br><span class="line"></span><br><span class="line"><span class="comment">// warning: variable `X` should have a snake case name</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">help: convert the identifier to snake case (notice the capitalization): `x`</span></span><br><span class="line"><span class="comment">  |</span></span><br><span class="line"><span class="comment">  = note: `#[warn(non_snake_case)]` on by default</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="mut"><a href="#mut" class="headerlink" title="mut"></a>mut</h3><p>使用 $mut$ 关键字表示变量可变</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">y</span> = <span class="number">5</span>;</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;y = &#123;y&#125;&quot;</span>);<span class="comment">// y = 5</span></span><br><span class="line">y = <span class="number">6</span>;</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;y = &#123;y&#125;&quot;</span>);<span class="comment">// y = 6</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="const"><a href="#const" class="headerlink" title="const"></a>const</h3><p>使用 $const$ 关键字表明常量 $(constants)$</p>
+<p><strong>必须显示声明常量类型</strong></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> YEAR : <span class="type">i32</span> = <span class="number">2024</span>;</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;YEAR = &#123;YEAR&#125;&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p><strong>常量名一般全部大写</strong>，小写 $warning$ 警告！</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Year : <span class="type">i32</span> = <span class="number">2024</span>;</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;YEAR = &#123;Year&#125;&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// constant `Year` should have an upper case name</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">help: convert the identifier to upper case: `YEAR` </span></span><br><span class="line"><span class="comment">  |</span></span><br><span class="line"><span class="comment">  = note: `#[warn(non_upper_case_globals)]` on by default</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="shadowing"><a href="#shadowing" class="headerlink" title="shadowing"></a>shadowing</h3><p>变量名与前面变量名相同，后面数据覆盖前面</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">s</span> = <span class="number">5</span>;</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;s = &#123;s&#125;&quot;</span>);<span class="comment">// s = 5</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">s</span> = s + <span class="number">1</span>;<span class="comment">// 覆盖前面的内容</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;s = &#123;s&#125;&quot;</span>);<span class="comment">// s = 6</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">s</span> = s * <span class="number">2</span>;</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;s = &#123;s&#125;&quot;</span>);<span class="comment">// s = 12</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">s</span> = <span class="string">&quot;    &quot;</span>;</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;s = &#123;s&#125;&quot;</span>);<span class="comment">// s = </span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">s</span> = s.<span class="title function_ invoke__">len</span>();<span class="comment">// 类型可变</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;s = &#123;s&#125;&quot;</span>);<span class="comment">// s = 4</span></span><br></pre></td></tr></table></figure>
+
+<p>吐槽：感觉 $shadowing$ 会造成错误，为什么不直接报错，不小心用了相同名字，前面数据就会被覆盖，这个设计感觉没用</p>
+<h2 id="Data-Types"><a href="#Data-Types" class="headerlink" title="Data Types"></a>Data Types</h2><h3 id="Integer-Types"><a href="#Integer-Types" class="headerlink" title="Integer Types"></a>Integer Types</h3><table>
+<thead>
+<tr>
+<th align="center">Length</th>
+<th align="center">Signed</th>
+<th align="center">Unsigned</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">8-bit</td>
+<td align="center"><code>i8</code></td>
+<td align="center"><code>u8</code></td>
+</tr>
+<tr>
+<td align="center">16-bit</td>
+<td align="center"><code>i16</code></td>
+<td align="center"><code>u16</code></td>
+</tr>
+<tr>
+<td align="center">32-bit</td>
+<td align="center"><code>i32</code></td>
+<td align="center"><code>u32</code></td>
+</tr>
+<tr>
+<td align="center">64-bit</td>
+<td align="center"><code>i64</code></td>
+<td align="center"><code>u64</code></td>
+</tr>
+<tr>
+<td align="center">128-bit</td>
+<td align="center"><code>i128</code></td>
+<td align="center"><code>u128</code></td>
+</tr>
+<tr>
+<td align="center">arch</td>
+<td align="center"><code>isize</code></td>
+<td align="center"><code>usize</code></td>
+</tr>
+</tbody></table>
+<h4 id="Integer-Literals-in-Rust"><a href="#Integer-Literals-in-Rust" class="headerlink" title="Integer Literals in Rust"></a>Integer Literals in Rust</h4><table>
+<thead>
+<tr>
+<th align="center">Number literals</th>
+<th align="center">Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Decimal</td>
+<td align="center"><code>98_222</code></td>
+</tr>
+<tr>
+<td align="center">Hex</td>
+<td align="center"><code>0xff</code></td>
+</tr>
+<tr>
+<td align="center">Octal</td>
+<td align="center"><code>0o77</code></td>
+</tr>
+<tr>
+<td align="center">Binary</td>
+<td align="center"><code>0b1111_0000</code></td>
+</tr>
+<tr>
+<td align="center">Byte (<code>u8</code> only)</td>
+<td align="center"><code>b&#39;A&#39;</code></td>
+</tr>
+</tbody></table>
+<p>数据 $overflow$ 会导致 $error$</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">x</span>: <span class="type">i8</span> = <span class="number">100</span>;</span><br><span class="line"><span class="keyword">let</span> <span class="variable">y</span>: <span class="type">i8</span> = <span class="number">100</span>;</span><br><span class="line"><span class="keyword">let</span> <span class="variable">z</span>: <span class="type">i8</span> = x + y;</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, z);</span><br><span class="line"></span><br><span class="line"><span class="comment">// i8 [-127, 128]</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">error: this arithmetic operation will overflow</span></span><br><span class="line"><span class="comment">attempt to compute `100_i8 + 100_i8`, which would overflow</span></span><br><span class="line"><span class="comment">  |</span></span><br><span class="line"><span class="comment">  = note: `#[deny(arithmetic_overflow)]` on by default</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Floating-Point-Types"><a href="#Floating-Point-Types" class="headerlink" title="Floating-Point Types"></a>Floating-Point Types</h3><table>
+<thead>
+<tr>
+<th align="center">Length</th>
+<th align="center">Type</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">32-bit</td>
+<td align="center"><code>f32</code></td>
+</tr>
+<tr>
+<td align="center">64-bit</td>
+<td align="center"><code>f64</code></td>
+</tr>
+</tbody></table>
+<h3 id="Numeric-Operations"><a href="#Numeric-Operations" class="headerlink" title="Numeric Operations"></a>Numeric Operations</h3><p>$+ \quad \quad - \quad \quad * \quad \quad &#x2F; \quad \quad %$</p>
+<p>$+&#x3D; \quad -&#x3D; \quad *&#x3D; \quad &#x2F;&#x3D; \quad %&#x3D;$</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// addition</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">sum</span> = <span class="number">5</span> + <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// subtraction</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">difference</span> = <span class="number">95.5</span> - <span class="number">4.3</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// multiplication</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">product</span> = <span class="number">4</span> * <span class="number">30</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// division</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">quotient</span> = <span class="number">56.7</span> / <span class="number">32.2</span>;</span><br><span class="line"><span class="keyword">let</span> <span class="variable">truncated</span> = -<span class="number">5</span> / <span class="number">3</span>; <span class="comment">// Results in -1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// remainder</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">remainder</span> = <span class="number">43</span> % <span class="number">5</span>;</span><br></pre></td></tr></table></figure>
+
+<p>应该和 $C++$ 是一样的</p>
+<h3 id="The-Boolean-Type"><a href="#The-Boolean-Type" class="headerlink" title="The Boolean Type"></a>The Boolean Type</h3><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">t</span> = <span class="literal">true</span>;</span><br><span class="line"><span class="keyword">let</span> <span class="variable">f</span>: <span class="type">bool</span> = <span class="literal">false</span>;<span class="comment">// with explicit type annotation</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;t&#125; &#123;f&#125;&quot;</span>);<span class="comment">// true false</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="The-Character-Type"><a href="#The-Character-Type" class="headerlink" title="The Character Type"></a>The Character Type</h3><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">c</span> = <span class="string">&#x27;z&#x27;</span>;</span><br><span class="line"><span class="keyword">let</span> <span class="variable">z</span>: <span class="type">char</span> = <span class="string">&#x27;ℤ&#x27;</span>; <span class="comment">// with explicit type annotation</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">heart_eyed_cat</span> = &#x27;😻&#x27;;</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;c&#125; &#123;z&#125; &#123;heart_eyed_cat&#125;&quot;</span>);<span class="comment">// z Z 😻</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Compound-Types"><a href="#Compound-Types" class="headerlink" title="Compound Types"></a>Compound Types</h3><h4 id="Tuple"><a href="#Tuple" class="headerlink" title="Tuple"></a>Tuple</h4><p>元组内数据类型可以不同</p>
+<p>可以取出来访问，或用下标访问 <code>data_name.index</code></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">x</span>: (<span class="type">i32</span>, <span class="type">f32</span>, <span class="type">bool</span>) = (<span class="number">1</span>, <span class="number">2.0</span>, <span class="literal">false</span>);</span><br><span class="line"><span class="keyword">let</span> (a, b, c) = x;</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;a&#125; &#123;b&#125; &#123;c&#125;&quot;</span>);</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125; &#123;&#125; &#123;&#125;&quot;</span>, x.<span class="number">0</span>, x.<span class="number">1</span>, x.<span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+
+<p>越界会 $Error!$</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125; &#123;&#125; &#123;&#125;&quot;</span>, x.<span class="number">0</span>, x.<span class="number">1</span>, x.<span class="number">3</span>);</span><br><span class="line"><span class="comment">// error[E0609]: no field `3` on type `(i32, f32, bool)`</span></span><br></pre></td></tr></table></figure>
+
+<p>直接打印元组</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;x&#125;&quot;</span>);<span class="comment">// Error</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">error[E0277]: `(i32, f32, bool)` doesn&#x27;t implement `std::fmt::Display`</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h4><p>类型必须一样</p>
+<p>使用 <code>[]</code> 来表示</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">x</span> = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br><span class="line"><span class="comment">// [type; size]</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">x</span>: [<span class="type">i32</span>; <span class="number">5</span>] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];<span class="comment">// with explicit type annotation</span></span><br></pre></td></tr></table></figure>
+
+<p>声明相同数据的数组</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// [val; size] init with same val</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">x</span> = [<span class="number">0</span>; <span class="number">5</span>];</span><br></pre></td></tr></table></figure>
+
+<p>注意 <code>[]</code> 内是 <code>;</code></p>
+<p>访问数组元素，使用 <code>data_name[index]</code></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, x[<span class="number">0</span>]);</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, x[<span class="number">5</span>]);<span class="comment">// this operation will panic at runtime index out of bounds: the length is 5 but the index is 5</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Functions"><a href="#Functions" class="headerlink" title="Functions"></a>Functions</h2><p>使用关键字 $fn$ 来声明函数</p>
+<p>不需要像 $C++$ 一样先声明后调用</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">fn_name</span>(Parameters) <span class="punctuation">-&gt;</span> <span class="keyword">type</span> &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>-&gt; type</code> 可不写</p>
+<p>例如</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, <span class="title function_ invoke__">test</span>(<span class="number">10</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">test</span>(n: <span class="type">i32</span>) <span class="punctuation">-&gt;</span> <span class="type">i32</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> n;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样也可</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">test</span>(n: <span class="type">i32</span>) <span class="punctuation">-&gt;</span> <span class="type">i32</span> &#123;</span><br><span class="line">    <span class="comment">// expression</span></span><br><span class="line">    n<span class="comment">// 注意无;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 若添加 ;</span></span><br><span class="line"><span class="comment">// expected `i32`, found `()`</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>函数名小写，大写 $warning$ 警告！</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">TEST</span>(n: <span class="type">i32</span>) <span class="punctuation">-&gt;</span> <span class="type">i32</span> &#123;</span><br><span class="line">    n</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//warning: function `TEST` should have a snake case name</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">   help: convert the identifier to snake case: `test`</span></span><br><span class="line"><span class="comment">   |</span></span><br><span class="line"><span class="comment">   = note: `#[warn(non_snake_case)]` on</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Control-Flow"><a href="#Control-Flow" class="headerlink" title="Control Flow"></a>Control Flow</h2><h3 id="if"><a href="#if" class="headerlink" title="if"></a>if</h3><p>$if$ 后条件必须为 $bool$ 类型！！！</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">number</span> = <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> number &lt; <span class="number">5</span> &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;condition was true&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;condition was false&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> number &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;condition was true&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;condition was false&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// error[E0308]: mismatched types</span></span><br><span class="line"><span class="comment">// expected `bool`, found integer</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>多条件用 $&amp;&amp;$ 或  $||$ 连接 </p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">number</span> = <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="number">3</span> &lt; number &amp;&amp; number &lt; <span class="number">5</span> &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;condition was true&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;condition was false&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>$else \ if$ 使用</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">number</span> = <span class="number">6</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> number % <span class="number">4</span> == <span class="number">0</span> &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;number is divisible by 4&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> number % <span class="number">3</span> == <span class="number">0</span> &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;number is divisible by 3&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> number % <span class="number">2</span> == <span class="number">0</span> &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;number is divisible by 2&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;number is not divisible by 4, 3, or 2&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="let-if"><a href="#let-if" class="headerlink" title="let + if"></a>let + if</h4><p>$if$ 和 $else$ 后的类型<strong>必须一样</strong></p>
+<p>有点像三目运算符复制</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">condition</span> = <span class="literal">true</span>;</span><br><span class="line"><span class="keyword">let</span> <span class="variable">number</span> = <span class="keyword">if</span> condition &#123; <span class="number">5</span> &#125; <span class="keyword">else</span> &#123; <span class="number">6</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;The value of number is: &#123;number&#125;&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">number</span> = <span class="keyword">if</span> condition &#123; <span class="number">5</span> &#125; <span class="keyword">else</span> &#123; <span class="string">&quot;six&quot;</span> &#125;;</span><br><span class="line"><span class="comment">// expected integer, found `&amp;str</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="loop"><a href="#loop" class="headerlink" title="loop"></a>loop</h3><p>一直循环</p>
+<p><code>break</code> 跳出循环，<code>continue</code> 继续下一次循环</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">loop</span> &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;again!&quot;</span>);</span><br><span class="line">&#125;<span class="comment">// 一直输出 again</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="while"><a href="#while" class="headerlink" title="while"></a>while</h3><p>基本形式</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> condition &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>例如</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> x &gt; <span class="number">0</span> &#123;</span><br><span class="line">    x -= <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;x&#125;&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="for"><a href="#for" class="headerlink" title="for"></a>for</h3><p>基本形式</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> <span class="variable">x</span> <span class="keyword">in</span> item &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>例如</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> <span class="variable">x</span> <span class="keyword">in</span> [<span class="number">3</span>; <span class="number">5</span>] &#123; <span class="comment">// 产生长度为 5 的全是 3 的数组</span></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;x&#125;&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> <span class="variable">i</span> <span class="keyword">in</span> (<span class="number">1</span>..<span class="number">4</span>) &#123; <span class="comment">// (l..r) 表示区间 [1, 4) 不含 4</span></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;i&#125;&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>以上就是 $Rust$ 的基本概念</p>
+<p>个人感想：$Rust$ 的语法规则非常严格，但是有一些没必要的语法糖。</p>
+<p>参考 <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/title-page.html#the-rust-programming-language">The Rust Programming Language</a> </p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://GitSteve1025.github.io">GitSteve1025</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://gitsteve1025.github.io/2024/01/30/Learning/Languages/Rust/1.Common%20Programming%20Concepts/">https://gitsteve1025.github.io/2024/01/30/Learning/Languages/Rust/1.Common%20Programming%20Concepts/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://GitSteve1025.github.io" target="_blank">GitSteve1025</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Rust/">Rust</a></div><div class="post_share"><div class="social-share" data-image="/avatar/kano.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2024/01/28/Learning/Languages/Rust/Rust%20code/" title="Rust Code"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Rust Code</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/01/28/Learning/Languages/Rust/Rust%20code/" title="Rust Code"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-28</div><div class="title">Rust Code</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/avatar/kano.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">GitSteve1025</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">22</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">25</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/GitSteve1025"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/GitSteve1025" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:3440346452@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">Welcome</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Common-Programming-Concepts"><span class="toc-number">1.</span> <span class="toc-text">Common Programming Concepts</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Comment"><span class="toc-number">1.1.</span> <span class="toc-text">Comment</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Variables-and-Mutability"><span class="toc-number">1.2.</span> <span class="toc-text">Variables and Mutability</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#let"><span class="toc-number">1.2.1.</span> <span class="toc-text">let</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mut"><span class="toc-number">1.2.2.</span> <span class="toc-text">mut</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#const"><span class="toc-number">1.2.3.</span> <span class="toc-text">const</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#shadowing"><span class="toc-number">1.2.4.</span> <span class="toc-text">shadowing</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Data-Types"><span class="toc-number">1.3.</span> <span class="toc-text">Data Types</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Integer-Types"><span class="toc-number">1.3.1.</span> <span class="toc-text">Integer Types</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Integer-Literals-in-Rust"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">Integer Literals in Rust</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Floating-Point-Types"><span class="toc-number">1.3.2.</span> <span class="toc-text">Floating-Point Types</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Numeric-Operations"><span class="toc-number">1.3.3.</span> <span class="toc-text">Numeric Operations</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Boolean-Type"><span class="toc-number">1.3.4.</span> <span class="toc-text">The Boolean Type</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Character-Type"><span class="toc-number">1.3.5.</span> <span class="toc-text">The Character Type</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Compound-Types"><span class="toc-number">1.3.6.</span> <span class="toc-text">Compound Types</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Tuple"><span class="toc-number">1.3.6.1.</span> <span class="toc-text">Tuple</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Array"><span class="toc-number">1.3.6.2.</span> <span class="toc-text">Array</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Functions"><span class="toc-number">1.4.</span> <span class="toc-text">Functions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Control-Flow"><span class="toc-number">1.5.</span> <span class="toc-text">Control Flow</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#if"><span class="toc-number">1.5.1.</span> <span class="toc-text">if</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#let-if"><span class="toc-number">1.5.1.1.</span> <span class="toc-text">let + if</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#loop"><span class="toc-number">1.5.2.</span> <span class="toc-text">loop</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#while"><span class="toc-number">1.5.3.</span> <span class="toc-text">while</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#for"><span class="toc-number">1.5.4.</span> <span class="toc-text">for</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/30/Learning/Languages/Rust/1.Common%20Programming%20Concepts/" title="Common Programming Concepts">Common Programming Concepts</a><time datetime="2024-01-30T07:00:00.000Z" title="发表于 2024-01-30 15:00:00">2024-01-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/28/Learning/Languages/Rust/Rust%20code/" title="Rust Code">Rust Code</a><time datetime="2024-01-28T06:00:00.000Z" title="发表于 2024-01-28 14:00:00">2024-01-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/28/Learning/Algorithms/Dynamic%20Programming/" title="Dynamic Programming">Dynamic Programming</a><time datetime="2024-01-28T04:31:00.000Z" title="发表于 2024-01-28 12:31:00">2024-01-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/01/27/ACM/Template/String/" title="String"><img src="/images/ACM/ACM.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="String"/></a><div class="content"><a class="title" href="/2024/01/27/ACM/Template/String/" title="String">String</a><time datetime="2024-01-27T11:40:04.486Z" title="发表于 2024-01-27 19:40:04">2024-01-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/01/27/ACM/Template/Other/" title="Other"><img src="/images/ACM/ACM.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Other"/></a><div class="content"><a class="title" href="/2024/01/27/ACM/Template/Other/" title="Other">Other</a><time datetime="2024-01-27T11:38:52.741Z" title="发表于 2024-01-27 19:38:52">2024-01-27</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By GitSteve1025</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
