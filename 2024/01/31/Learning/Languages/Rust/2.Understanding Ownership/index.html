@@ -1,0 +1,339 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Understanding Ownership | GitSteve1025</title><meta name="author" content="GitSteve1025"><meta name="copyright" content="GitSteve1025"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Understanding OwnershipWhat Is Ownership?所有权是 rust 用来管理内存的，本节内容很重要，毕竟 rust 主打内存安全 内存一般为 stack 和 heap 在编译时可以确定大小的一般放在 stack 例如 String（可变） 内容放在 heap， 但是 size， capacity 等信息占用的内存是固定的，会放在 stack 特性 123&#x2F;&#x2F; 超出">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Understanding Ownership">
+<meta property="og:url" content="https://gitsteve1025.github.io/2024/01/31/Learning/Languages/Rust/2.Understanding%20Ownership/index.html">
+<meta property="og:site_name" content="GitSteve1025">
+<meta property="og:description" content="Understanding OwnershipWhat Is Ownership?所有权是 rust 用来管理内存的，本节内容很重要，毕竟 rust 主打内存安全 内存一般为 stack 和 heap 在编译时可以确定大小的一般放在 stack 例如 String（可变） 内容放在 heap， 但是 size， capacity 等信息占用的内存是固定的，会放在 stack 特性 123&#x2F;&#x2F; 超出">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitsteve1025.github.io/avatar/kano.jpg">
+<meta property="article:published_time" content="2024-01-31T08:30:00.000Z">
+<meta property="article:modified_time" content="2024-01-31T09:31:16.811Z">
+<meta property="article:author" content="GitSteve1025">
+<meta property="article:tag" content="Rust">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitsteve1025.github.io/avatar/kano.jpg"><link rel="shortcut icon" href="/avatar/kano.jpg"><link rel="canonical" href="https://gitsteve1025.github.io/2024/01/31/Learning/Languages/Rust/2.Understanding%20Ownership/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Understanding Ownership',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-01-31 17:31:16'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/avatar/kano.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">26</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/top/default/default.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="GitSteve1025"><span class="site-name">GitSteve1025</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Understanding Ownership</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-01-31T08:30:00.000Z" title="发表于 2024-01-31 16:30:00">2024-01-31</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-01-31T09:31:16.811Z" title="更新于 2024-01-31 17:31:16">2024-01-31</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Learning/">Learning</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Learning/Languages/">Languages</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Learning/Languages/Rust/">Rust</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Learning/Languages/Rust/2-Understanding-Ownership/">2.Understanding Ownership</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>4分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Understanding Ownership"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Understanding-Ownership"><a href="#Understanding-Ownership" class="headerlink" title="Understanding Ownership"></a>Understanding Ownership</h1><h2 id="What-Is-Ownership"><a href="#What-Is-Ownership" class="headerlink" title="What Is Ownership?"></a>What Is Ownership?</h2><p>所有权是 rust 用来管理内存的，本节内容很重要，毕竟 rust 主打内存安全</p>
+<p>内存一般为 stack 和 heap</p>
+<p>在<strong>编译时</strong>可以确定大小的一般放在 stack</p>
+<p>例如 String（可变） 内容放在 heap， 但是 size， capacity 等信息占用的内存是固定的，会放在 stack</p>
+<p>特性</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 超出作用域 内存回收</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">t</span> = s;<span class="comment">// String 编译时大小不确定 复制为浅拷贝 move # heap 内存未复制</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, s); <span class="comment">//Error! value borrowed here after move #</span></span><br></pre></td></tr></table></figure>
+
+<p>当我们复制时只有 stack 部分复制，heap 内容未复制，此时所有权交给了 t ，此时用 s 会引发错误</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">x</span> = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">let</span> <span class="variable">y</span> = x;</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125; &#123;&#125;&quot;</span>, x, y);<span class="comment">// right</span></span><br></pre></td></tr></table></figure>
+
+<p>普通类型大小确定，在 stack 中，复制 stack 中的内容，此时任然可以使用</p>
+<p>实际上这与 copy trait 和 drop trait 有关</p>
+<p>copy trait : 实现了就可以完全放在 stack 上</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// i32 f32 bool char </span></span><br><span class="line"><span class="comment">// tuple 内实现 copy trait</span></span><br></pre></td></tr></table></figure>
+
+<p>drop trait : 用于 free 内存</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// (部分)实现了 drop trait 就不能实现 copy trait</span></span><br><span class="line"><span class="comment">// String 有 drop trait</span></span><br><span class="line"><span class="comment">// tuple 中 含有 String 此时就不能实现 copy trait</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>注意只要有赋值就会发生以上事情</p>
+<p>例如</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">take_ownership</span>(s: <span class="type">String</span>) &#123; <span class="comment">// 定义一个函数</span></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, s);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">s</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;2024&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">take_ownership</span>(s);<span class="comment">// this parameter takes ownership of the value</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, s);<span class="comment">// Error!</span></span><br></pre></td></tr></table></figure>
+
+<p>当我们调用函数时，所有权就发生了转移，此时我们再去使用它时，就会发生错误</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 解析</span></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">take_ownership</span>(s: <span class="type">String</span>) &#123; <span class="comment">// 所有权转移</span></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, s);</span><br><span class="line">&#125;<span class="comment">// 离开作用域 s 被释放</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, s);<span class="comment">// Error!</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>看另一个例子</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">take_give_back</span>(s: <span class="type">String</span>) <span class="punctuation">-&gt;</span> <span class="type">String</span> &#123;<span class="comment">// 所有权转移</span></span><br><span class="line">    s <span class="comment">// 返回 s</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">s</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;2024&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">t</span> = <span class="title function_ invoke__">take_give_back</span>(s);<span class="comment">// 所有权给 t</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, t);</span><br></pre></td></tr></table></figure>
+
+<p>这时候运行正常，因为所有权被返回后赋值给了 t，此时调用 s 会出错</p>
+<p>我们不想失去所有权，可以返回所有权，但有点麻烦，下面介绍另外的方法</p>
+<h2 id="References-and-Borrowing"><a href="#References-and-Borrowing" class="headerlink" title="References and Borrowing"></a>References and Borrowing</h2><p>通过引用的方式，我问不会失去所有权</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// reference  not attain ownership, cannot modify</span></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">refe</span>(s: &amp;<span class="type">String</span>)&#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, s);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">s</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;2024&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">refe</span>(&amp;s);<span class="comment">// not drop</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, s); <span class="comment">// right</span></span><br></pre></td></tr></table></figure>
+
+<p>这时候 s 依然可用，但此时 s 是不可变的</p>
+<p>我们可用通过可变<code>mut</code>引用，对数据修改，此时所有权依旧不会变化</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">mut_refe</span>(s: &amp;<span class="keyword">mut</span> <span class="type">String</span>)&#123;</span><br><span class="line">    s.<span class="title function_ invoke__">push_str</span>(<span class="string">&quot;1 28&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// mut reference </span></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">s</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;2024&quot;</span>); <span class="comment">// mut</span></span><br><span class="line"><span class="title function_ invoke__">mut_refe</span>(&amp;<span class="keyword">mut</span> s);</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, s);</span><br></pre></td></tr></table></figure>
+
+
+
+<p>特性</p>
+<p>同一区域最多含有一个可变引用</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">s1</span> = &amp;<span class="keyword">mut</span> s;</span><br><span class="line"><span class="keyword">let</span> <span class="variable">s2</span> = &amp;<span class="keyword">mut</span> s;<span class="comment">// cannot borrow `s` as mutable more than once at a time </span></span><br><span class="line"><span class="comment">// println!(&quot;&#123;&#125; &#123;&#125;&quot;, s1, s2);</span></span><br><span class="line"></span><br><span class="line">&#123;<span class="comment">// 这样就没问题</span></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">s2</span> = &amp;<span class="keyword">mut</span> s;  </span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, s2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>不能同时拥有可变引用， 不可变引用</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">s1</span> = &amp;<span class="keyword">mut</span> s;</span><br><span class="line"><span class="keyword">let</span> <span class="variable">s2</span> = &amp;s;<span class="comment">// cannot borrow `s` as immutable because it is also borrowed as mutable</span></span><br><span class="line"><span class="comment">// println!(&quot;&#123;&#125; &#123;&#125;&quot;, s1, s2);</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>不可变引用可有多个</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">s1</span> = &amp;s;</span><br><span class="line"><span class="keyword">let</span> <span class="variable">s2</span> = &amp;s;</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125; &#123;&#125;&quot;</span>, s1, s2);</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="The-Slice-Type"><a href="#The-Slice-Type" class="headerlink" title="The Slice Type"></a>The Slice Type</h2><p>切片<code>[start..end]</code> 范围 [start, end) ，index 越界会造成错误</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">s</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;abcdefrrtyry&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">s1</span> = &amp;s[<span class="number">0</span>..<span class="number">5</span>];<span class="comment">// </span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">s2</span> = &amp;s[<span class="number">6</span>..<span class="number">10</span>];</span><br><span class="line"><span class="comment">// let s2 = &amp;s[6..20]; Error!</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125; &#123;&#125;&quot;</span>, s1, s2);</span><br></pre></td></tr></table></figure>
+
+<p>此时 s1, s2 是 s 的不可变引用，再对 s 进行可变引用会出错！</p>
+<p><code>iter()</code>使用</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">item</span> = [<span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;scut&quot;</span>), <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;2024&quot;</span>)];</span><br><span class="line"><span class="keyword">for</span> <span class="variable">x</span> <span class="keyword">in</span> item &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, x);</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> <span class="variable">x</span> <span class="keyword">in</span> item &#123;<span class="comment">// use of moved value: `item` Error!</span></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, x);</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>iter()</code> 进行引用</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> <span class="variable">x</span> <span class="keyword">in</span> item.<span class="title function_ invoke__">iter</span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, x);</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+
+
+<p><code>enumerate()</code> 使用</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">item</span> = [<span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;scut&quot;</span>), <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;2024&quot;</span>)];</span><br><span class="line"><span class="keyword">for</span> (i, x) <span class="keyword">in</span> item.<span class="title function_ invoke__">iter</span>().<span class="title function_ invoke__">enumerate</span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125; &#123;&#125;&quot;</span>, i, x);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>enumerate()</code> 返回元组 (index, x) </p>
+<p>好像不能设置起始位置 即 i 的初始值，注意不是 index 的起始位置，python 的 enumerate 可以设置 start</p>
+<p>以上就是 $Rust$ 的 $Ownership$</p>
+<p>参考 <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/title-page.html#the-rust-programming-language">The Rust Programming Language</a> </p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://GitSteve1025.github.io">GitSteve1025</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://gitsteve1025.github.io/2024/01/31/Learning/Languages/Rust/2.Understanding%20Ownership/">https://gitsteve1025.github.io/2024/01/31/Learning/Languages/Rust/2.Understanding%20Ownership/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://GitSteve1025.github.io" target="_blank">GitSteve1025</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Rust/">Rust</a></div><div class="post_share"><div class="social-share" data-image="/avatar/kano.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2024/01/30/Learning/Languages/Rust/1.Common%20Programming%20Concepts/" title="Common Programming Concepts"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Common Programming Concepts</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/01/30/Learning/Languages/Rust/1.Common%20Programming%20Concepts/" title="Common Programming Concepts"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-30</div><div class="title">Common Programming Concepts</div></div></a></div><div><a href="/2024/01/28/Learning/Languages/Rust/Rust%20code/" title="Rust Code"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-28</div><div class="title">Rust Code</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/avatar/kano.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">GitSteve1025</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">26</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/GitSteve1025"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/GitSteve1025" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:3440346452@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">Welcome</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Understanding-Ownership"><span class="toc-number">1.</span> <span class="toc-text">Understanding Ownership</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#What-Is-Ownership"><span class="toc-number">1.1.</span> <span class="toc-text">What Is Ownership?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#References-and-Borrowing"><span class="toc-number">1.2.</span> <span class="toc-text">References and Borrowing</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Slice-Type"><span class="toc-number">1.3.</span> <span class="toc-text">The Slice Type</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/31/Learning/Languages/Rust/2.Understanding%20Ownership/" title="Understanding Ownership">Understanding Ownership</a><time datetime="2024-01-31T08:30:00.000Z" title="发表于 2024-01-31 16:30:00">2024-01-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/30/Learning/Languages/Rust/1.Common%20Programming%20Concepts/" title="Common Programming Concepts">Common Programming Concepts</a><time datetime="2024-01-30T07:00:00.000Z" title="发表于 2024-01-30 15:00:00">2024-01-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/28/Learning/Languages/Rust/Rust%20code/" title="Rust Code">Rust Code</a><time datetime="2024-01-28T06:00:00.000Z" title="发表于 2024-01-28 14:00:00">2024-01-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/28/Learning/Algorithms/Dynamic%20Programming/" title="Dynamic Programming">Dynamic Programming</a><time datetime="2024-01-28T04:31:00.000Z" title="发表于 2024-01-28 12:31:00">2024-01-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/01/27/ACM/Template/String/" title="String"><img src="/images/ACM/ACM.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="String"/></a><div class="content"><a class="title" href="/2024/01/27/ACM/Template/String/" title="String">String</a><time datetime="2024-01-27T11:40:04.486Z" title="发表于 2024-01-27 19:40:04">2024-01-27</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By GitSteve1025</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
