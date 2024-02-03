@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>Error Handling</title>
+      <link href="/2024/02/03/Learning/Languages/Rust/6.Error%20Handling/"/>
+      <url>/2024/02/03/Learning/Languages/Rust/6.Error%20Handling/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Error-Handling"><a href="#Error-Handling" class="headerlink" title="Error Handling"></a>Error Handling</h1><h2 id="Unrecoverable-Errors-with-panic"><a href="#Unrecoverable-Errors-with-panic" class="headerlink" title="Unrecoverable Errors with panic!"></a>Unrecoverable Errors with panic!</h2><p>Rust 的 可靠性：错误处理，大部分情况下：在编译时提示错误并处理</p><p>错误分类：</p><p>可恢复：例如文件未找到，可再次尝试</p><p>不可恢复：例如访问索引超出范围</p><p>默认情况下，当 panic 发生：</p><ul><li>程序展开调用栈 （工作量大）</li><li>Rust 沿着调用栈回走</li><li>清理每个遇到的函数中的数据</li><li>或 立即终止调用栈</li><li>不清理内存，直接停止程序，内存需要 OS 进行清理</li></ul><p><code>panic!</code> 宏</p><p>产生 panic 打印路径，行等信息</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">panic!</span>(<span class="string">&quot;crash&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// thread &#x27;main&#x27; panicked at src\main.rs:3:5:crash</span></span><br></pre></td></tr></table></figure><p>panic！可能出现在我们写的代码中，我们所依赖的代码中</p><p>通过设置环境变量 RUST_BACKTRACE 可以得到回溯信息</p><h2 id="Recoverable-Errors-with-Result"><a href="#Recoverable-Errors-with-Result" class="headerlink" title="Recoverable Errors with Result"></a>Recoverable Errors with Result</h2><p>Result 枚举</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="keyword">enum</span> <span class="title class_">Result</span>&lt;T, E&gt; &#123;</span><br><span class="line">    <span class="title function_ invoke__">Ok</span>(T),</span><br><span class="line">    <span class="title function_ invoke__">Err</span>(E),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>操作成功返回 Ok(T) 中的数据</p><p>操作失败返回 Err(E) 中的数据</p><p>例如打开一个文件， 返回 Result 类型</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::fs::File;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">frs</span> = File::<span class="title function_ invoke__">open</span>(<span class="string">&quot;some.txt&quot;</span>);</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">x</span> = <span class="keyword">match</span> frs &#123;</span><br><span class="line">        <span class="title function_ invoke__">Ok</span>(file) =&gt; file,</span><br><span class="line">        <span class="title function_ invoke__">Err</span>(error) =&gt; &#123;</span><br><span class="line">            <span class="built_in">panic!</span>(<span class="string">&quot;Not find file &#123;:#?&#125;&quot;</span>, error);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>输出信息</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">thread <span class="symbol">&#x27;main</span>&#x27; panicked at src\main.rs:<span class="number">9</span>:<span class="number">13</span>:</span><br><span class="line">Not find file Os &#123;</span><br><span class="line">    code: <span class="number">2</span>,</span><br><span class="line">    kind: NotFound,</span><br><span class="line">    message: <span class="string">&quot;系统找不到指定的文件。&quot;</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>传播错误，将错误返回，让调用者决定如何处理</p><p>例如</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">read_username_from_file</span>(path: &amp;<span class="type">str</span>) <span class="punctuation">-&gt;</span> <span class="type">Result</span>&lt;<span class="type">String</span>, io::Error&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">frs</span> = File::<span class="title function_ invoke__">open</span>(path);</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">f</span> = <span class="keyword">match</span> frs &#123;</span><br><span class="line">        <span class="title function_ invoke__">Ok</span>(file) =&gt; file,</span><br><span class="line">        <span class="title function_ invoke__">Err</span>(err) =&gt; <span class="keyword">return</span> <span class="title function_ invoke__">Err</span>(err),</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">s</span> = <span class="type">String</span>::<span class="title function_ invoke__">new</span>();</span><br><span class="line">    <span class="keyword">match</span> f.<span class="title function_ invoke__">read_to_string</span>(&amp;<span class="keyword">mut</span> s) &#123;</span><br><span class="line">        <span class="title function_ invoke__">Ok</span>(_) =&gt; <span class="title function_ invoke__">Ok</span>(s),</span><br><span class="line">        <span class="title function_ invoke__">Err</span>(e) =&gt; <span class="title function_ invoke__">Err</span>(e),</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><code>?</code> 运算符 传播错误的一种快捷方式</p><p>例如，与上面功能一样</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">read_username_from_file</span>(path: &amp;<span class="type">str</span>) <span class="punctuation">-&gt;</span> <span class="type">Result</span>&lt;<span class="type">String</span>, io::Error&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">f</span> = File::<span class="title function_ invoke__">open</span>(path)?;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">s</span> = <span class="type">String</span>::<span class="title function_ invoke__">new</span>();</span><br><span class="line">    f.<span class="title function_ invoke__">read_to_string</span>(&amp;<span class="keyword">mut</span> s)?;</span><br><span class="line">    <span class="title function_ invoke__">Ok</span>(s)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// let mut f = File::open(path)?;</span></span><br><span class="line"><span class="comment">// 等于</span></span><br><span class="line"><span class="comment">// let mut f = match frs &#123;</span></span><br><span class="line"><span class="comment">// Ok(file) =&gt; file,</span></span><br><span class="line"><span class="comment">//     Err(err) =&gt; return Err(err),</span></span><br><span class="line"><span class="comment">// &#125;;</span></span><br></pre></td></tr></table></figure><p>即 <code>?</code> 作用于 Result ，成功即 Ok(T) 中的 T， 失败即 return Err</p><p>链式调用的方式</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">read_username_from_file</span>(path: &amp;<span class="type">str</span>) <span class="punctuation">-&gt;</span> <span class="type">Result</span>&lt;<span class="type">String</span>, io::Error&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">s</span> = <span class="type">String</span>::<span class="title function_ invoke__">new</span>();</span><br><span class="line">    File::<span class="title function_ invoke__">open</span>(path)?.<span class="title function_ invoke__">read_to_string</span>(&amp;<span class="keyword">mut</span> s)?;</span><br><span class="line">    <span class="title function_ invoke__">Ok</span>(s)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="To-panic-or-Not-to-panic"><a href="#To-panic-or-Not-to-panic" class="headerlink" title="To panic! or Not to panic!"></a>To panic! or Not to panic!</h2><p>示例、 代码原型和测试都非常适合 panic  </p><p>当我们比编译器知道更多的情况，当你有一些其他的逻辑来确保 Result 会是 Ok 值时，调用 unwrap 或者 expect 也是合适的  </p><p>错误处理指导原则：在当有可能会导致有害状态的情况下建议使用 panic!</p><p>当错误预期会出现时，返回 Result 仍要比调用 panic! 更为合适 </p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Learning </category>
+          
+          <category> Languages </category>
+          
+          <category> Rust </category>
+          
+          <category> 6.Error Handling </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Rust </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Common Collections</title>
       <link href="/2024/02/01/Learning/Languages/Rust/5.Common%20Collections/"/>
       <url>/2024/02/01/Learning/Languages/Rust/5.Common%20Collections/</url>
@@ -743,28 +774,6 @@
     
     
     <entry>
-      <title>Music</title>
-      <link href="/music/index.html"/>
-      <url>/music/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Link</title>
-      <link href="/link/index.html"/>
-      <url>/link/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>About</title>
       <link href="/about/index.html"/>
       <url>/about/index.html</url>
@@ -779,6 +788,28 @@
       <title>Movies</title>
       <link href="/movies/index.html"/>
       <url>/movies/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Music</title>
+      <link href="/music/index.html"/>
+      <url>/music/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Link</title>
+      <link href="/link/index.html"/>
+      <url>/link/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
