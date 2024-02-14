@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>Writing Automated Tests</title>
+      <link href="/2024/02/13/Learning/Languages/Rust/8.Writing%20Automated%20Tests/"/>
+      <url>/2024/02/13/Learning/Languages/Rust/8.Writing%20Automated%20Tests/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Writing-Automated-Tests"><a href="#Writing-Automated-Tests" class="headerlink" title="Writing Automated Tests"></a>Writing Automated Tests</h1><h2 id="How-to-Write-Tests"><a href="#How-to-Write-Tests" class="headerlink" title="How to Write Tests"></a>How to Write Tests</h2><p>cargo test 会执行所有测试，即 #[test] 下的测试</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[cfg(test)]</span></span><br><span class="line"><span class="keyword">mod</span> tests &#123;</span><br><span class="line">    <span class="meta">#[test]</span></span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">it_works</span>() &#123;</span><br><span class="line">        <span class="built_in">assert_eq!</span>(<span class="number">2</span> + <span class="number">2</span>, <span class="number">4</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>输出信息</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">running <span class="number">1</span> test</span><br><span class="line">test tests::it_works ... ok</span><br><span class="line"></span><br><span class="line">test result: ok. <span class="number">1</span> passed; <span class="number">0</span> failed; <span class="number">0</span> ignored; <span class="number">0</span> measured; <span class="number">0</span> filtered out; finished <span class="keyword">in</span> <span class="number">0.00</span>s</span><br></pre></td></tr></table></figure><p>测试 panic 表示失败</p><p><code>assert!</code> 宏， 当为假时，会 panic</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">assert!</span>(<span class="literal">true</span>);</span><br><span class="line"><span class="built_in">assert!</span>(<span class="number">0</span> == <span class="number">1</span>);<span class="comment">// false</span></span><br></pre></td></tr></table></figure><p><code>assert_eq!</code> 与 <code>assert_ne!</code> 即断言相等与不相等</p><p>断言失败会打印参数的值，要求实现了 PartialEq 和 Debug Traits （基本类型都实现了）</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">assert_eq!</span>(<span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line"><span class="comment">// output</span></span><br><span class="line">assertion `left == right` failed</span><br><span class="line">  left: <span class="number">1</span></span><br><span class="line"> right: <span class="number">0</span></span><br></pre></td></tr></table></figure><p>添加自定义错误信息</p><p><code>assert!</code>, <code>assert_eq!</code>, <code>assert_ne</code> 后面还有一个参数，自定义信息</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">assert!</span>(<span class="number">0</span> == <span class="number">1</span>, <span class="string">&quot;1 not eq 0&quot;</span>);<span class="comment">// false</span></span><br><span class="line"><span class="comment">// output</span></span><br><span class="line">thread <span class="symbol">&#x27;tests</span>::it_works&#x27; panicked at src\lib.rs:<span class="number">7</span>:<span class="number">9</span>:</span><br><span class="line"><span class="number">1</span> not eq <span class="number">0</span></span><br></pre></td></tr></table></figure><p><code>#[should_panic]</code></p><p>添加这个时， panic 才会通过（pass）</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[cfg(test)]</span></span><br><span class="line"><span class="keyword">mod</span> tests &#123;</span><br><span class="line">    <span class="meta">#[test]</span></span><br><span class="line">    <span class="meta">#[should_panic]</span></span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">it_works</span>() &#123;</span><br><span class="line">        <span class="built_in">assert!</span>(<span class="number">0</span> == <span class="number">1</span>, <span class="string">&quot;1 not eq 0&quot;</span>);<span class="comment">// false</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// output</span></span><br><span class="line">thread <span class="symbol">&#x27;tests</span>::it_works&#x27; panicked at src\lib.rs:<span class="number">8</span>:<span class="number">9</span>:</span><br><span class="line"><span class="number">1</span> not eq <span class="number">0</span></span><br><span class="line">...</span><br><span class="line">test result: ok. <span class="number">1</span> passed; <span class="number">0</span> failed; <span class="number">0</span> ignored; <span class="number">0</span> measured; <span class="number">0</span> filtered out; finished <span class="keyword">in</span> <span class="number">0.02</span>s</span><br></pre></td></tr></table></figure><p>让 should_panic 更精确</p><p>当 panic 信息包含should_panic 的信息才会通过</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="keyword">struct</span> <span class="title class_">Node</span> &#123;</span><br><span class="line">    value: <span class="type">i32</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> <span class="title class_">Node</span> &#123;</span><br><span class="line">    <span class="keyword">pub</span> <span class="keyword">fn</span> <span class="title function_">new</span>(v: <span class="type">i32</span>) <span class="punctuation">-&gt;</span> Node &#123;</span><br><span class="line">        <span class="keyword">if</span> v &gt; <span class="number">100</span> &#123;</span><br><span class="line">            <span class="built_in">panic!</span>(<span class="string">&quot;val &gt; 100&quot;</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">panic!</span>(<span class="string">&quot;val &lt;= 100&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        Node &#123;value: v&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[cfg(test)]</span></span><br><span class="line"><span class="keyword">mod</span> tests &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">use</span> super::*;</span><br><span class="line"></span><br><span class="line">    <span class="meta">#[test]</span></span><br><span class="line">    <span class="meta">#[should_panic(expected = <span class="string">&quot;val &gt; 100&quot;</span>)]</span><span class="comment">// </span></span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">it_works</span>() &#123;</span><br><span class="line">        Node::<span class="title function_ invoke__">new</span>(<span class="number">100</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// output</span></span><br><span class="line">test result: FAILED. <span class="number">0</span> passed; <span class="number">1</span> failed; <span class="number">0</span> ignored; <span class="number">0</span> measured; <span class="number">0</span> filtered out; finished <span class="keyword">in</span> <span class="number">0.03</span>s</span><br></pre></td></tr></table></figure><p>在测试中使用 <code>Result&lt;T, E&gt;</code></p><p>测试返回 Ok 通过， Err 失败</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[cfg(test)]</span></span><br><span class="line"><span class="keyword">mod</span> tests &#123;</span><br><span class="line">    <span class="meta">#[test]</span></span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">it_works</span>() <span class="punctuation">-&gt;</span> <span class="type">Result</span>&lt;(),  <span class="type">String</span>&gt; &#123;</span><br><span class="line">        <span class="title function_ invoke__">Err</span>(<span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;failed&quot;</span>))</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// output</span></span><br><span class="line">test result: FAILED. <span class="number">0</span> passed; <span class="number">1</span> failed; <span class="number">0</span> ignored; <span class="number">0</span> measured; <span class="number">0</span> filtered out; finished <span class="keyword">in</span> <span class="number">0.00</span>s</span><br></pre></td></tr></table></figure><h2 id="Controlling-How-Tests-Are-Run"><a href="#Controlling-How-Tests-Are-Run" class="headerlink" title="Controlling How Tests Are Run"></a>Controlling How Tests Are Run</h2><p>改变 cargo test 的行为：添加命令行参数</p><p>默认行为：</p><ul><li>并行运行（运行快，确保测试不相互依赖）</li><li>所有测试</li><li>捕获（不显示）所有输出</li></ul><p>命令行参数：</p><p>针对 cargo test 的参数：紧跟其后 <code>cargo test --help</code> 查看</p><p>针对 测试可执行程序：放在 – 之后 <code>cargo test -- --help</code> 查看</p><p><code>#[ignore]</code> 忽略测试</p><p><code>cargo test -- --ignored</code> 运行被忽略的测试</p><h2 id="Test-Organization"><a href="#Test-Organization" class="headerlink" title="Test Organization"></a>Test Organization</h2><p>测试分类</p><ul><li><p>单元测试 <code>#[cfg(test)]</code></p></li><li><p>集成测试 处于被测试库外  面</p><p>集成测试新建文件夹 tests，tests 目录下每个测试文件都是单独的一个 crate，需要将被测试库导入，无需标注 #[cfg(test)]，tests 目录被特殊对待</p></li></ul><p>单独测试某个文件内所有测试 <code>cargo test --test 文件名</code> </p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Learning </category>
+          
+          <category> Languages </category>
+          
+          <category> Rust </category>
+          
+          <category> 8.Writing Automated Tests </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Rust </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Generic Types, Traits, and Lifetimes</title>
       <link href="/2024/02/07/Learning/Languages/Rust/7.Generic%20Types,%20Traits,%20and%20Lifetimes/"/>
       <url>/2024/02/07/Learning/Languages/Rust/7.Generic%20Types,%20Traits,%20and%20Lifetimes/</url>
@@ -805,17 +836,6 @@
     
     
     <entry>
-      <title>Link</title>
-      <link href="/link/index.html"/>
-      <url>/link/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>About</title>
       <link href="/about/index.html"/>
       <url>/about/index.html</url>
@@ -827,9 +847,9 @@
     
     
     <entry>
-      <title>Categories</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
+      <title>Link</title>
+      <link href="/link/index.html"/>
+      <url>/link/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -838,9 +858,9 @@
     
     
     <entry>
-      <title>Music</title>
-      <link href="/music/index.html"/>
-      <url>/music/index.html</url>
+      <title>Tags</title>
+      <link href="/tags/index.html"/>
+      <url>/tags/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -860,9 +880,20 @@
     
     
     <entry>
-      <title>Tags</title>
-      <link href="/tags/index.html"/>
-      <url>/tags/index.html</url>
+      <title>Music</title>
+      <link href="/music/index.html"/>
+      <url>/music/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Categories</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
