@@ -4,6 +4,68 @@
   
     
     <entry>
+      <title>Functional Language Features Iterators and Closures</title>
+      <link href="/2024/02/16/Learning/Languages/Rust/10.Functional%20Language%20Features%20Iterators%20and%20Closures/"/>
+      <url>/2024/02/16/Learning/Languages/Rust/10.Functional%20Language%20Features%20Iterators%20and%20Closures/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Functional-Language-Features-Iterators-and-Closures"><a href="#Functional-Language-Features-Iterators-and-Closures" class="headerlink" title="Functional Language Features Iterators and Closures"></a>Functional Language Features Iterators and Closures</h1><h2 id="Closures-Anonymous-Functions-that-Capture-Their-Environment"><a href="#Closures-Anonymous-Functions-that-Capture-Their-Environment" class="headerlink" title="Closures: Anonymous Functions that Capture Their  Environment"></a>Closures: Anonymous Functions that Capture Their  Environment</h2><p>闭包：可以捕获其所在环境的匿名函数</p><p>闭包的定义 </p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">|parameters: <span class="keyword">type</span>, ...| <span class="punctuation">-&gt;</span> <span class="keyword">type</span> &#123;</span><br><span class="line">    code</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>参数和返回值的类型可以不用显示标注，编译器会自动推断</p><p>可以将闭包赋值给变量调用</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">f</span> = |num: <span class="type">i32</span>| &#123;</span><br><span class="line">    num</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>如何让 struct 持有闭包</p><p>需要泛型和 Fn Trait</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Cacher</span>&lt;T&gt; </span><br><span class="line"><span class="keyword">where</span></span><br><span class="line">    T: <span class="title function_ invoke__">Fn</span>(<span class="type">i32</span>) <span class="punctuation">-&gt;</span> <span class="type">i32</span>,<span class="comment">// 参数和返回值</span></span><br><span class="line">&#123;</span><br><span class="line">    cal: T,</span><br><span class="line">    value: <span class="type">Option</span>&lt;<span class="type">i32</span>&gt;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span>&lt;T&gt; Cacher&lt;T&gt;</span><br><span class="line"><span class="keyword">where</span></span><br><span class="line">    T: <span class="title function_ invoke__">Fn</span>(<span class="type">i32</span>) <span class="punctuation">-&gt;</span> <span class="type">i32</span>,</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">new</span>(x: T) <span class="punctuation">-&gt;</span> Cacher&lt;T&gt; &#123;</span><br><span class="line">        Cacher &#123;</span><br><span class="line">            cal: x,</span><br><span class="line">            value: <span class="literal">None</span>,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">value</span>(&amp;<span class="keyword">mut</span> <span class="keyword">self</span>, arg: <span class="type">i32</span>) <span class="punctuation">-&gt;</span> <span class="type">i32</span> &#123;</span><br><span class="line">        <span class="keyword">match</span> <span class="keyword">self</span>.value &#123;</span><br><span class="line">            <span class="title function_ invoke__">Some</span>(x) =&gt; x,</span><br><span class="line">            <span class="literal">None</span> =&gt; &#123;</span><br><span class="line">                <span class="keyword">let</span> <span class="variable">v</span> = (<span class="keyword">self</span>.cal)(arg);</span><br><span class="line">                <span class="keyword">self</span>.value = <span class="title function_ invoke__">Some</span>(v);</span><br><span class="line">                v</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>使用闭包捕获环境</p><p>直接使用函数不能捕获外界的变量</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// can&#x27;t capture dynamic environment in a fn item</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">x</span> = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">f</span>(y: <span class="type">i32</span>) <span class="punctuation">-&gt;</span> <span class="type">i32</span> &#123;</span><br><span class="line">    x</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, <span class="title function_ invoke__">f</span>(x));</span><br></pre></td></tr></table></figure><p>使用闭包捕获外界的值</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">x</span> = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">let</span> <span class="variable">f</span> = |num: <span class="type">i32</span>| <span class="punctuation">-&gt;</span> <span class="type">i32</span> &#123;</span><br><span class="line">    x</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, <span class="title function_ invoke__">f</span>(x));</span><br></pre></td></tr></table></figure><p>闭包从所在环境捕获值的方式</p><ul><li>FnOnce 取得所有权</li><li>FnMut 可变借用</li><li>Fn 不可变借用</li></ul><p><code>move</code> 关键字，强制闭包获得它使用环境值的所有权</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">x</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;2024&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">f</span> = <span class="keyword">move</span> || &#123; <span class="comment">// move</span></span><br><span class="line">    x == <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;2024&quot;</span>)</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, x);</span><br><span class="line"><span class="comment">// value borrowed here after move</span></span><br></pre></td></tr></table></figure><h2 id="Processing-a-Series-of-Items-with-Iterators"><a href="#Processing-a-Series-of-Items-with-Iterators" class="headerlink" title="Processing a Series of Items with Iterators"></a>Processing a Series of Items with Iterators</h2><p>迭代器模式：对一系列项执行某些任务</p><p>迭代器负责：遍历每个项，确定序列（遍历）何时完成</p><p>rust 的迭代器</p><p>懒惰的： 除非调用消费迭代器的方法，否则迭代器本身没有任何效果</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">v</span> = <span class="built_in">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">let</span> <span class="variable">v_iter</span> = v.<span class="title function_ invoke__">iter</span>();</span><br><span class="line"><span class="keyword">for</span> <span class="variable">x</span> <span class="keyword">in</span> v_iter &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, x);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>iterator trait </p><p>所有 迭代器都实现了 iterator trait</p><p>iterator trait 仅要求实现一个方法 next</p><p>next 每次返回迭代器中的一项，返回结果包裹在 Some， 结束返回 None</p><p>迭代器使用</p><ul><li>iter ： 在不可变引用上创建迭代器</li><li>into_iter ： 创建的迭代器会获得所有权</li><li>iter_mut ： 迭代可变的引用</li></ul><p><code>map</code> 接受一个闭包，闭包作用于每个元素，产生一个新的迭代器</p><p><code>collect</code> 消耗型适配器，把结果收集到一个集合类型中</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">v</span> = <span class="built_in">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">let</span> <span class="variable">v_iter</span> = v.<span class="title function_ invoke__">iter</span>();</span><br><span class="line"><span class="keyword">let</span> <span class="variable">v1</span>: <span class="type">Vec</span>&lt;_&gt; = v_iter.<span class="title function_ invoke__">map</span>(|x| x + <span class="number">1</span>).<span class="title function_ invoke__">collect</span>();</span><br><span class="line"><span class="built_in">assert_eq!</span>(<span class="built_in">vec!</span>[<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>], v1);</span><br></pre></td></tr></table></figure><p><code>filter</code> 接受闭包，闭包返回 bool 类型，当返回 true 时，产生的迭代器就会包含该元素</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">v</span> = <span class="built_in">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">6</span>];</span><br><span class="line"><span class="keyword">let</span> <span class="variable">v_iter</span> = v.<span class="title function_ invoke__">into_iter</span>(); <span class="comment">// 获取所有权</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">v1</span>: <span class="type">Vec</span>&lt;_&gt; = v_iter.<span class="title function_ invoke__">filter</span>(|x| x % <span class="number">3</span> == <span class="number">0</span>).<span class="title function_ invoke__">collect</span>();</span><br><span class="line"><span class="built_in">assert_eq!</span>(<span class="built_in">vec!</span>[<span class="number">3</span>, <span class="number">6</span>], v1);</span><br></pre></td></tr></table></figure><p>自定义迭代器，实现 next</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Counter</span> &#123;</span><br><span class="line">    count: <span class="type">u32</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> <span class="title class_">Iterator</span> <span class="keyword">for</span> <span class="title class_">Counter</span> &#123;</span><br><span class="line">    <span class="keyword">type</span> <span class="title class_">Item</span> = <span class="type">u32</span>;</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">next</span>(&amp;<span class="keyword">mut</span> <span class="keyword">self</span>) <span class="punctuation">-&gt;</span> <span class="type">Option</span>&lt;<span class="keyword">Self</span>::Item&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">self</span>.count &lt; <span class="number">5</span> &#123;</span><br><span class="line">            <span class="keyword">self</span>.count += <span class="number">1</span>;</span><br><span class="line">            <span class="title function_ invoke__">Some</span>(<span class="keyword">self</span>.count)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="literal">None</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="Comparing-Performance-Loops-vs-Iterators"><a href="#Comparing-Performance-Loops-vs-Iterators" class="headerlink" title="Comparing Performance: Loops vs. Iterators"></a>Comparing Performance: Loops vs. Iterators</h2><p>迭代器与循环效率比较</p><p>迭代器效率更高</p><p>迭代器是 Rust 的 零成本抽象（zero-cost abstractions）之一，它意味着抽象并不会引入运行时开销</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Learning </category>
+          
+          <category> Languages </category>
+          
+          <category> Rust </category>
+          
+          <category> 10.Functional Language Features Iterators and Closures </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Rust </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>An IO Project Building a Command Line Program</title>
+      <link href="/2024/02/15/Learning/Languages/Rust/9.An%20IO%20Project%20Building%20a%20Command%20Line%20%20Program/"/>
+      <url>/2024/02/15/Learning/Languages/Rust/9.An%20IO%20Project%20Building%20a%20Command%20Line%20%20Program/</url>
+      
+        <content type="html"><![CDATA[<h1 id="An-IO-Project-Building-a-Command-Line-Program"><a href="#An-IO-Project-Building-a-Command-Line-Program" class="headerlink" title="An IO Project Building a Command Line Program"></a>An IO Project Building a Command Line Program</h1><h2 id="Accepting-Command-Line-Arguments"><a href="#Accepting-Command-Line-Arguments" class="headerlink" title="Accepting Command Line Arguments"></a>Accepting Command Line Arguments</h2><p>使用 <code>std::env::args()</code> 获得命令行参数迭代器</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::env;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">args</span>: <span class="type">Vec</span>&lt;<span class="type">String</span>&gt; = env::<span class="title function_ invoke__">args</span>().<span class="title function_ invoke__">collect</span>();</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;:#?&#125;&quot;</span>, args);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// output</span></span><br><span class="line">[</span><br><span class="line">    <span class="string">&quot;target\\debug\\rust.exe&quot;</span>,</span><br><span class="line">]</span><br></pre></td></tr></table></figure><p>添加自定义参数</p><ol><li><code>cargo build</code></li><li><code>cargo run -- command line</code></li></ol><p>例如</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">cargo build</span><br><span class="line">cargo run -- <span class="number">2024</span> scut</span><br><span class="line"><span class="comment">// output</span></span><br><span class="line">[</span><br><span class="line">    <span class="string">&quot;target\\debug\\rust.exe&quot;</span>,</span><br><span class="line">    <span class="string">&quot;2024&quot;</span>,</span><br><span class="line">    <span class="string">&quot;scut&quot;</span>,</span><br><span class="line">]</span><br></pre></td></tr></table></figure><h2 id="Reading-a-File"><a href="#Reading-a-File" class="headerlink" title="Reading a File"></a>Reading a File</h2><p>在项目文件夹下添加 <code>info.txt</code> 添加内容， 利用 <code>std::fs</code> 读取文件内容</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// cargo build</span></span><br><span class="line"><span class="comment">// cargo run -- info.txt</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> std::env;</span><br><span class="line"><span class="keyword">use</span> std::fs;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">args</span>: <span class="type">Vec</span>&lt;<span class="type">String</span>&gt; = env::<span class="title function_ invoke__">args</span>().<span class="title function_ invoke__">collect</span>();</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">path</span> = &amp;args[<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">contents</span> = fs::<span class="title function_ invoke__">read_to_string</span>(path).<span class="title function_ invoke__">expect</span>(<span class="string">&quot;error&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;:#?&#125;&quot;</span>, args);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, contents);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="Refactoring-to-Improve-Modularity-and-Error-Handling"><a href="#Refactoring-to-Improve-Modularity-and-Error-Handling" class="headerlink" title="Refactoring to Improve Modularity and Error Handling"></a>Refactoring to Improve Modularity and Error Handling</h2><p>当我们在 main 不断添加内容， main 可能变得非常大， 这时候我们就要重构，改善模块</p><p>例如，将不同功能写到不同的函数， 添加更好的错误处理，对用户更好的错误提示等</p><p>例如将读取 path 改为一个函数</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">get_path</span>(args: &amp;[<span class="type">String</span>]) <span class="punctuation">-&gt;</span> &amp;<span class="type">String</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> args.<span class="title function_ invoke__">len</span>() &lt; <span class="number">2</span> &#123;</span><br><span class="line">        <span class="built_in">panic!</span>(<span class="string">&quot;failed to get path&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    &amp;args[<span class="number">1</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="Developing-the-Library’s-Functionality-with-Test-Driven-Development"><a href="#Developing-the-Library’s-Functionality-with-Test-Driven-Development" class="headerlink" title="Developing the Library’s Functionality with Test-Driven  Development"></a>Developing the Library’s Functionality with Test-Driven  Development</h2><ol><li>编写一个失败的测试，并运行它以确保它失败的原因是你所期望的。</li><li>编写或修改足够的代码来使新的测试通过。</li><li>重构刚刚增加或修改的代码，并确保测试仍然能通过。</li><li>从步骤 1 开始重复！</li></ol><h2 id="Working-with-Environment-Variables"><a href="#Working-with-Environment-Variables" class="headerlink" title="Working with Environment Variables"></a>Working with Environment Variables</h2><p>通过 <code>env::var()</code> 来设置环境变量， 返回 Result ， Ok 时表示其被设置</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">ignore_case</span> = env::<span class="title function_ invoke__">var</span>(<span class="string">&quot;IGNORE_CASE&quot;</span>).<span class="title function_ invoke__">is_ok</span>();</span><br><span class="line"><span class="comment">// IGNORE_CASE=1 cargo run 将其设置为 1</span></span><br></pre></td></tr></table></figure><h2 id="Writing-Error-Messages-to-Standard-Error-Instead-of-Standard-Output"><a href="#Writing-Error-Messages-to-Standard-Error-Instead-of-Standard-Output" class="headerlink" title="Writing Error Messages to Standard Error Instead of  Standard Output"></a>Writing Error Messages to Standard Error Instead of  Standard Output</h2><p>将输出定向到文件中</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cargo run &gt; file</span><br></pre></td></tr></table></figure><p>例如到 output.txt 中</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cargo run &gt; output.txt</span><br></pre></td></tr></table></figure><p><code>eprintln!</code>宏将错误打印到标准错误  </p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Learning </category>
+          
+          <category> Languages </category>
+          
+          <category> Rust </category>
+          
+          <category> 9.An IO Project Building a Command Line Program </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Rust </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Writing Automated Tests</title>
       <link href="/2024/02/13/Learning/Languages/Rust/8.Writing%20Automated%20Tests/"/>
       <url>/2024/02/13/Learning/Languages/Rust/8.Writing%20Automated%20Tests/</url>
@@ -836,31 +898,9 @@
     
     
     <entry>
-      <title>About</title>
-      <link href="/about/index.html"/>
-      <url>/about/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Link</title>
       <link href="/link/index.html"/>
       <url>/link/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Tags</title>
-      <link href="/tags/index.html"/>
-      <url>/tags/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -880,9 +920,20 @@
     
     
     <entry>
-      <title>Music</title>
-      <link href="/music/index.html"/>
-      <url>/music/index.html</url>
+      <title>Tags</title>
+      <link href="/tags/index.html"/>
+      <url>/tags/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>About</title>
+      <link href="/about/index.html"/>
+      <url>/about/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -894,6 +945,17 @@
       <title>Categories</title>
       <link href="/categories/index.html"/>
       <url>/categories/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Music</title>
+      <link href="/music/index.html"/>
+      <url>/music/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
